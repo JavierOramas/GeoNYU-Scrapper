@@ -17,3 +17,449 @@
 {" Armenia": " Level 1 divisions include cities and provinces"}
 {" Australia": " Level 1 divisions include states and territories"}
 {" Austria": " Level 1 divisions include states"}
+{" Azerbaijan": " Level 1 divisions include regions"}
+{" Bahamas": " Level 1 divisions include districts"}
+{" Bahrain": " Level 1 divisions include governorates"}
+{" Bangladesh": " Level 1 divisions include divisions"}
+{" Barbados": " Level 1 divisions include parishes"}
+{" Belarus": " Level 1 divisions include regions"}
+{" Belgium": " Level 1 divisions include regions"}
+{" Belize": " Level 1 divisions include districts"}
+{" Benin": " Level 1 divisions include departments"}
+{" Bermuda": " Level 1 divisions include municipalities and parishes"}
+{" Bhutan": " Level 1 divisions include districts"}
+{" Bolivia": " Level 1 divisions include departments"}
+{" Bosnia and Herzegovina": " Level 1 divisions include districts and entities"}
+{" Botswana": " Level 1 divisions include districts"}
+{" Brazil": " Level 1 divisions include states and federal districts"}
+{" Brunei": " Level 1 divisions include districts"}
+{" Bulgaria": " Level 1 divisions include provinces"}
+{" Burkina Faso": " Level 1 divisions include regions"}
+{" Burundi": " Level 1 divisions include provinces"}
+{" Cambodia": " Level 1 divisions include municipalities and provinces"}
+{" Cameroon": " Level 1 divisions include regions"}
+{" Canada": " Level 1 divisions include provinces and territories"}
+{" Cape Verde": " Level 1 divisions include counties"}
+{" Cayman Islands": " Level 1 divisions include districts"}
+{" Chad": " Level 1 divisions include regions"}
+{" Chile": " Level 1 divisions include regions"}
+{" China": " Level 1 divisions include provinces"}
+{" Colombia": " Level 1 divisions include departments"}
+{" Comoros": " Level 1 divisions include autonomous islands"}
+{" Costa Rica": " Level 1 divisions include provinces"}
+{" Croatia": " Level 1 divisions include counties and the city of zagreb"}
+{" Cuba": " Level 1 divisions include provinces"}
+{" Cyprus": " Level 1 divisions include districts"}
+{" Czech Republic": " Level 1 divisions include regions"}
+{" Denmark": " Level 1 divisions include regions"}
+{" Djibouti": " Level 1 divisions include regions and djibouti city"}
+{" Dominica": " Level 1 divisions include parishes"}
+{" Dominican Republic": " Level 1 divisions include provinces and the national district"}
+{" Ecuador": " Level 1 divisions include provinces"}
+{" Egypt": " Level 1 divisions include governorates"}
+{" El Salvador": " Level 1 divisions include departments"}
+{" Equatorial Guinea": " Level 1 divisions include provinces"}
+{" Eritrea": " Level 1 divisions include regions"}
+{" Estonia": " Level 1 divisions include counties"}
+{" Ethiopia": " Level 1 divisions include states"}
+{" Faroe Islands": " Level 1 divisions include regions"}
+{" Fiji": " Level 1 divisions include divisions"}
+{" Finland": " Level 1 divisions include provinces"}
+{" France": " Level 1 divisions include regions"}
+{" French Guiana": " Level 1 divisions include arrondissements"}
+{" French Polynesia": " Level 1 divisions include administrative subdivisions"}
+{" Gabon": " Level 1 divisions include provinces"}
+{" Gambia": " Level 1 divisions include divisions"}
+{" Georgia": " Level 1 divisions include autonomous republics and regions"}
+{" Germany": " Level 1 divisions include states"}
+{" Ghana": " Level 1 divisions include regions"}
+{" Greece": " Level 1 divisions include decentralized administration"}
+{" Greenland": " Level 1 divisions include communes and national parks"}
+{" Grenada": " Level 1 divisions include parishes and dependencies"}
+{" Guadeloupe": " Level 1 divisions include districts"}
+{" Guam": " Level 1 divisions include municipalities"}
+{" Guatemala": " Level 1 divisions include departments"}
+{" Guernsey": " Level 1 divisions include parishes"}
+{" Guinea": " Level 1 divisions include regions"}
+{" Guinea-Bissau": " Level 1 divisions include autonomous sectors and regions"}
+{" Guyana": " Level 1 divisions include regions"}
+{" Haiti": " Level 1 divisions include departments"}
+{" Honduras": " Level 1 divisions include departments"}
+{" Hong Kong": " Level 1 divisions include districts"}
+{" Hungary": " Level 1 divisions include counties and capital cities"}
+{" Iceland": " Level 1 divisions include regions and independent towns"}
+{" India": " Level 1 divisions include states and union territories"}
+{" Indonesia": " Level 1 divisions include provinces, sub-divisions and the capital city"}
+{" Iran": " Level 1 divisions include provinces"}
+{" Iraq": " Level 1 divisions include provinces"}
+{" Ireland": " Level 1 divisions include counties"}
+{" Israel": " Level 1 divisions include districts"}
+{" Italy": " Level 1 divisions include regions and autonomous regions"}
+{" Jamaica": " Level 1 divisions include parishes"}
+{" Japan": " Level 1 divisions include metropolitan areas, circuits, and prefectures"}
+{" Jersey": " Level 1 divisions include parishes"}
+{" Jordan": " Level 1 divisions include provinces"}
+{" Kazakhstan": " Level 1 divisions include regions"}
+{" Kenya": " Level 1 divisions include counties"}
+{" Kosovo": " Level 1 divisions include districts"}
+{" Kuwait": " Level 1 divisions include provinces"}
+{" Kyrgyzstan": " Level 1 divisions include provinces"}
+{" \u00c5land Islands": " Level 1 divisions include municipalities"}
+{" Laos": " Level 1 divisions include municipalities, provinces, special regions, and zones"}
+{" Latvia": " Level 1 divisions include provinces"}
+{" Lebanon": " Level 1 divisions include governorates"}
+{" Lesotho": " Level 1 divisions include districts"}
+{" Liberia": " Level 1 divisions include counties"}
+{" Libya": " Level 1 divisions include districts"}
+{" Liechtenstein": " Level 1 divisions include communes"}
+{" Lithuania": " Level 1 divisions include counties"}
+{" Luxembourg": " Level 1 divisions include districts"}
+{" Macao": " Level 1 divisions include districts"}
+{" Macedonia": " Level 1 divisions include municipalities"}
+{" Madagascar": " Level 1 divisions include autonomous provinces"}
+{" Malawi": " Level 1 divisions include districts"}
+{" Malaysia": " Level 1 divisions include states and federal territories"}
+{" Mali": " Level 1 divisions include districts and regions"}
+{" Martinique": " Level 1 divisions include arrondissements"}
+{" Mauritania": " Level 1 divisions include districts and regions"}
+{" Mauritius": " Level 1 divisions include districts, regions, and autonomous islands"}
+{" Mayotte": " Level 1 divisions include communes"}
+{" Mexico": " Level 1 divisions include states and federal districts"}
+{" Micronesia": " Level 1 divisions include states"}
+{" Moldova": " Level 1 divisions include autonomous sectors, districts, territorial units and cities"}
+{" Mongolia": " Level 1 divisions include municipalities and provinces"}
+{" Montenegro": " Level 1 divisions include municipalities"}
+{" Montserrat": " Level 1 divisions include parishes"}
+{" Morocco": " Level 1 divisions include regions"}
+{" Mozambique": " Level 1 divisions include provinces"}
+{" Myanmar": " Level 1 divisions include states, divisions, and union territories"}
+{" Namibia": " Level 1 divisions include regions"}
+{" Nauru": " Level 1 divisions include districts"}
+{" Nepal": " Level 1 divisions include development regions"}
+{" Netherlands": " Level 1 divisions include provinces"}
+{" New Caledonia": " Level 1 divisions include provinces"}
+{" New Zealand": " Level 1 divisions include regional councils, territorial and unitary authorities"}
+{" Nicaragua": " Level 1 divisions include autonomous regions and departments"}
+{" Niger": " Level 1 divisions include departments and capital districts"}
+{" Nigeria": " Level 1 divisions include states"}
+{" Northern Cyprus": " Level 1 divisions include districts"}
+{" Norway": " Level 1 divisions include counties"}
+{" Oman": " Level 1 divisions include provinces and regions"}
+{" Pakistan": " Level 1 divisions include capital territories, centrally administered areas, and provinces"}
+{" Palau": " Level 1 divisions include states"}
+{" Palestina": " Level 1 divisions include districts"}
+{" Panama": " Level 1 divisions include indigenous territories and provinces"}
+{" Paraguay": " Level 1 divisions include capital districts and departments"}
+{" Peru": " Level 1 divisions include provinces and regions"}
+{" Philippines": " Level 1 divisions include provinces"}
+{" Poland": " Level 1 divisions include provinces"}
+{" Portugal": " Level 1 divisions include autonomous regions and districts"}
+{" Puerto Rico": " Level 1 divisions include municipalities"}
+{" Qatar": " Level 1 divisions include municipalities"}
+{" Republic of Congo": " Level 1 divisions include regions"}
+{" Reunion": " Level 1 divisions include arrondissements"}
+{" Romania": " Level 1 divisions include counties and municipalities"}
+{" Russia": " Level 1 divisions include autonomous provinces, republics, territories, and regions"}
+{" Rwanda": " Level 1 divisions include provinces"}
+{" Saint Helena": " Level 1 divisions include administrative areas and dependencies"}
+{" Saint Lucia": " Level 1 divisions include quarters"}
+{" Samoa": " Level 1 divisions include districts"}
+{" San Marino": " Level 1 divisions include municipalities"}
+{" Saudi Arabia": " Level 1 divisions include regions"}
+{" Senegal": " Level 1 divisions include regions"}
+{" Serbia": " Level 1 divisions include cities and districts"}
+{" Seychelles": " Level 1 divisions include districts and outer islands"}
+{" Sierra Leone": " Level 1 divisions include provinces"}
+{" Singapore": " Level 1 divisions include regions"}
+{" Slovakia": " Level 1 divisions include regions"}
+{" Slovenia": " Level 1 divisions include statistical regions"}
+{" Solomon Islands": " Level 1 divisions include capital territories and provinces"}
+{" Somalia": " Level 1 divisions include regions"}
+{" South Africa": " Level 1 divisions include provinces"}
+{" South Korea": " Level 1 divisions include metropolitan cities and provinces"}
+{" South Sudan": " Level 1 divisions include states"}
+{" Spain": " Level 1 divisions include autonomous cities and communities"}
+{" Sri Lanka": " Level 1 divisions include districts"}
+{" Sudan": " Level 1 divisions include states"}
+{" Suriname": " Level 1 divisions include districts"}
+{" Swaziland": " Level 1 divisions include districts"}
+{" Sweden": " Level 1 divisions include counties"}
+{" Switzerland": " Level 1 divisions include cantons"}
+{" Syria": " Level 1 divisions include provinces"}
+{" Taiwan": " Level 1 divisions include provinces and special municipalities"}
+{" Tajikistan": " Level 1 divisions include regions"}
+{" Tanzania": " Level 1 divisions include regions"}
+{" Thailand": " Level 1 divisions include provinces"}
+{" Timor-Leste": " Level 1 divisions include districts"}
+{" Togo": " Level 1 divisions include regions"}
+{" Tokelau": " Level 1 divisions include atolls"}
+{" Tonga": " Level 1 divisions include island groups"}
+{" Trinidad and Tobago": " Level 1 divisions include boroughs, cities, and regions"}
+{" Tunisia": " Level 1 divisions include governorates"}
+{" Turkey": " Level 1 divisions include provinces"}
+{" Turkmenistan": " Level 1 divisions include independent cities and provinces"}
+{" Tuvalu": " Level 1 divisions include island and town councils"}
+{" Uganda": " Level 1 divisions include districts"}
+{" Ukraine": " Level 1 divisions include regions, independent cities, and autonomous republics"}
+{" United States": " Level 1 divisions include states and federal districts"}
+{" Uruguay": " Level 1 divisions include departments"}
+{" Uzbekistan": " Level 1 divisions include autononous republic, regions, and the capital city "}
+{" Vanuatu": " Level 1 divisions include provinces"}
+{" Venezuela": " Level 1 divisions include states"}
+{" Vietnam": " Level 1 divisions include provinces and municipalities"}
+{" Wallis and Futuna": " Level 1 divisions include kingdoms"}
+{" Western Sahara": " Level 1 divisions include provinces"}
+{" Yemen": " Level 1 divisions include governorates and sana city"}
+{" Zambia": " Level 1 divisions include provinces"}
+{" Zimbabwe": " Level 1 divisions include cities and provinces"}
+{" Belgium": " Level 4 divisions include communes"}
+{" Burundi": " Level 4 divisions include sous collines"}
+{" Cambodia": " Level 4 divisions include villages"}
+{" C\u00f4te d'Ivoire": " Level 4 divisions include sub-prefectures"}
+{" Finland": " Level 4 divisions include municipalities"}
+{" France": " Level 4 divisions include cantons"}
+{" Germany": " Level 4 divisions include towns"}
+{" Haiti": " Level 4 divisions include sub-communes"}
+{" Luxembourg": " Level 4 divisions include communes and quarters"}
+{" Madagascar": " Level 4 divisions include communes"}
+{" Mali": " Level 4 divisions include communes"}
+{" Morocco": " Level 4 divisions include rural and urban communes"}
+{" Nepal": " Level 4 divisions include village development committees"}
+{" Rwanda": " Level 4 divisions include cells"}
+{" Senegal": " Level 4 divisions include communes and national parks"}
+{" South Africa": " Level 4 divisions include wards"}
+{" Spain": " Level 4 divisions include municipalities"}
+{" Uganda": " Level 4 divisions include parishes"}
+{" Afghanistan": " Level 2 divisions include districts"}
+{" Albania": " Level 2 divisions include districts"}
+{" Algeria": " Level 2 divisions include provinces"}
+{" American Samoa": " Level 2 divisions include counties"}
+{" Angola": " Level 2 divisions include municipalities"}
+{" Argentina": " Level 2 divisions include departments, federal districts, and parts"}
+{" Azerbaijan": " Level 2 divisions include cities and districts"}
+{" Bangladesh": " Level 2 divisions include districts"}
+{" Belarus": " Level 2 divisions include districts"}
+{" Belgium": " Level 2 divisions include capital regions and provinces"}
+{" Benin": " Level 2 divisions include communes"}
+{" Bhutan": " Level 2 divisions include village blocks"}
+{" Bolivia": " Level 2 divisions include provinces"}
+{" Bosnia and Herzegovina": " Level 2 divisions include cantons"}
+{" Botswana": " Level 2 divisions include cities"}
+{" Brazil": " Level 2 divisions include municipalities"}
+{" Brunei": " Level 2 divisions include mukims"}
+{" Bulgaria": " Level 2 divisions include municipalities"}
+{" Burkina Faso": " Level 2 divisions include provinces"}
+{" Burundi": " Level 2 divisions include communes"}
+{" Cambodia": " Level 2 divisions include districts"}
+{" Cameroon": " Level 2 divisions include departments"}
+{" Canada": " Level 2 divisions include census divisions (counties)"}
+{" Chad": " Level 2 divisions include departments"}
+{" Chile": " Level 2 divisions include provinces"}
+{" China": " Level 2 divisions include prefectures"}
+{" Colombia": " Level 2 divisions include municipalities"}
+{" Costa Rica": " Level 2 divisions include cantons"}
+{" C\u00f4te d'Ivoire": " Level 2 divisions include regions"}
+{" Cuba": " Level 2 divisions include municipalities"}
+{" Czech Republic": " Level 2 divisions include districts"}
+{" Denmark": " Level 2 divisions include municipalities"}
+{" Djibouti": " Level 2 divisions include districts"}
+{" Dominican Republic": " Level 2 divisions include municipalities"}
+{" Ecuador": " Level 2 divisions include cantons"}
+{" Egypt": " Level 2 divisions include subdivisions"}
+{" El Salvador": " Level 2 divisions include municipalities"}
+{" Equatorial Guinea": " Level 2 divisions include districts*municipalities"}
+{" Eritrea": " Level 2 divisions include districts"}
+{" Estonia": " Level 2 divisions include parishes and towns"}
+{" Ethiopia": " Level 2 divisions include zones"}
+{" Faroe Islands": " Level 2 divisions include communes"}
+{" Fiji": " Level 2 divisions include provinces"}
+{" Finland": " Level 2 divisions include regions"}
+{" France": " Level 2 divisions include departments"}
+{" French Guiana": " Level 2 divisions include communes"}
+{" Gabon": " Level 2 divisions include departments"}
+{" Gambia": " Level 2 divisions include districts"}
+{" Georgia": " Level 2 divisions include cities"}
+{" Germany": " Level 2 divisions include districts"}
+{" Ghana": " Level 2 divisions include districts"}
+{" Greece": " Level 2 divisions include regions"}
+{" Guadeloupe": " Level 2 divisions include communes"}
+{" Guatemala": " Level 2 divisions include municipalities"}
+{" Guinea": " Level 2 divisions include prefectures"}
+{" Guinea-Bissau": " Level 2 divisions include sectors"}
+{" Guyana": " Level 2 divisions include neighbourhood councils"}
+{" Haiti": " Level 2 divisions include districts"}
+{" Honduras": " Level 2 divisions include municipalities"}
+{" Hungary": " Level 2 divisions include subregions"}
+{" Iceland": " Level 2 divisions include municipalities"}
+{" India": " Level 2 divisions include districts"}
+{" Indonesia": " Level 2 divisions include regencies and cities"}
+{" Iran": " Level 2 divisions include counties and islands"}
+{" Italy": " Level 2 divisions include provinces"}
+{" Japan": " Level 2 divisions include cities, special wards, towns and villages"}
+{" Jordan": " Level 2 divisions include sub-provinces"}
+{" Kazakhstan": " Level 2 divisions include assemblies and districts"}
+{" Kenya": " Level 2 divisions include conservancies"}
+{" Kosovo": " Level 2 divisions include townlets"}
+{" Kyrgyzstan": " Level 2 divisions include cities and districts"}
+{" Laos": " Level 2 divisions include districts"}
+{" Latvia": " Level 2 divisions include districts"}
+{" Lebanon": " Level 2 divisions include districts"}
+{" Liberia": " Level 2 divisions include districts"}
+{" Lithuania": " Level 2 divisions include municipalities"}
+{" Luxembourg": " Level 2 divisions include cantons"}
+{" Macao": " Level 2 divisions include parishes"}
+{" Madagascar": " Level 2 divisions include regions"}
+{" Malawi": " Level 2 divisions include headquarters, cities, national parks and reserves"}
+{" Malaysia": " Level 2 divisions include districts and federal territories"}
+{" Mali": " Level 2 divisions include circles"}
+{" Martinique": " Level 2 divisions include communes"}
+{" Mauritania": " Level 2 divisions include departments"}
+{" Mexico": " Level 2 divisions include municipalities"}
+{" Mongolia": " Level 2 divisions include sums"}
+{" Morocco": " Level 2 divisions include prefectures and provinces"}
+{" Mozambique": " Level 2 divisions include districts"}
+{" Myanmar": " Level 2 divisions include districts"}
+{" Namibia": " Level 2 divisions include conservancies"}
+{" Nepal": " Level 2 divisions include administrative zones"}
+{" Netherlands": " Level 2 divisions include municipalities"}
+{" New Caledonia": " Level 2 divisions include communes"}
+{" New Zealand": " Level 2 divisions include cities, districts, and territories"}
+{" Nicaragua": " Level 2 divisions include municipalities"}
+{" Niger": " Level 2 divisions include arrondissements"}
+{" Nigeria": " Level 2 divisions include local authorities"}
+{" North Korea": " Level 2 divisions include cities, counties, and wards"}
+{" Norway": " Level 2 divisions include municipalities"}
+{" Oman": " Level 2 divisions include provinces"}
+{" Pakistan": " Level 2 divisions include divisions"}
+{" Palestina": " Level 2 divisions include governorates"}
+{" Panama": " Level 2 divisions include indigenous territories and districts"}
+{" Paraguay": " Level 2 divisions include districts"}
+{" Peru": " Level 2 divisions include provinces"}
+{" Philippines": " Level 2 divisions include cities and municipalities"}
+{" Poland": " Level 2 divisions include cities and counties"}
+{" Portugal": " Level 2 divisions include municipalities"}
+{" Republic of Congo": " Level 2 divisions include districts"}
+{" Reunion": " Level 2 divisions include communes"}
+{" Romania": " Level 2 divisions include communes and municipalities"}
+{" Russia": " Level 2 divisions include autonomous okurgs, cities, and districts"}
+{" Rwanda": " Level 2 divisions include districts"}
+{" Saint Helena": " Level 2 divisions include administrative areas, dependencies, and districts"}
+{" Senegal": " Level 2 divisions include departments"}
+{" Serbia": " Level 2 divisions include towns"}
+{" Sierra Leone": " Level 2 divisions include areas and districts"}
+{" Slovakia": " Level 2 divisions include districts"}
+{" Slovenia": " Level 2 divisions include communes"}
+{" Solomon Islands": " Level 2 divisions include wards"}
+{" Somalia": " Level 2 divisions include districts"}
+{" South Africa": " Level 2 divisions include district municipalities"}
+{" South Korea": " Level 2 divisions include districts and counties"}
+{" South Sudan": " Level 2 divisions include districts"}
+{" Spain": " Level 2 divisions include provinces"}
+{" Sri Lanka": " Level 2 divisions include divisions"}
+{" Sudan": " Level 2 divisions include districts"}
+{" Suriname": " Level 2 divisions include resorts"}
+{" Swaziland": " Level 2 divisions include conservancies"}
+{" Sweden": " Level 2 divisions include municipalities"}
+{" Switzerland": " Level 2 divisions include districts"}
+{" Syria": " Level 2 divisions include districts"}
+{" Taiwan": " Level 2 divisions include counties, provincial cities, and special municipalities"}
+{" Tanzania": " Level 2 divisions include districts"}
+{" Thailand": " Level 2 divisions include districts"}
+{" Timor-Leste": " Level 2 divisions include sub-districts"}
+{" Togo": " Level 2 divisions include communes and prefectures"}
+{" Tunisia": " Level 2 divisions include delegations"}
+{" Turkey": " Level 2 divisions include districts"}
+{" Uganda": " Level 2 divisions include councils, city councils, and municipalities"}
+{" Ukraine": " Level 2 divisions include raions"}
+{" United Kingdom": " Level 2 divisions include counties, boroughs, cities, and districts"}
+{" United States": " Level 2 divisions include counties and cities"}
+{" Uruguay": " Level 2 divisions include parts"}
+{" Uzbekistan": " Level 2 divisions include districts"}
+{" Vanuatu": " Level 2 divisions include municipalities and area councils"}
+{" Venezuela": " Level 2 divisions include municipalities"}
+{" Vietnam": " Level 2 divisions include cities and districts"}
+{" Wallis and Futuna": " Level 2 divisions include districts"}
+{" Yemen": " Level 2 divisions include districts"}
+{" Zambia": " Level 2 divisions include districts"}
+{" Zimbabwe": " Level 2 divisions include districts"}
+{" Albania": " Level 3 divisions include bashkias and communes"}
+{" American Samoa": " Level 3 divisions include villages"}
+{" Angola": " Level 3 divisions include communes"}
+{" Austria": " Level 3 divisions include municipalities"}
+{" Bangladesh": " Level 3 divisions include sub-districts"}
+{" Belgium": " Level 3 divisions include arrondissements"}
+{" Bolivia": " Level 3 divisions include municipalities"}
+{" Bosnia and Herzegovina": " Level 3 divisions include communes"}
+{" Brazil": " Level 3 divisions include districts"}
+{" Burkina Faso": " Level 3 divisions include departments"}
+{" Burundi": " Level 3 divisions include collines"}
+{" Cambodia": " Level 3 divisions include communes"}
+{" Cameroon": " Level 3 divisions include arrondissements"}
+{" Canada": " Level 3 divisions include census subdivisions (municipalities)"}
+{" Chad": " Level 3 divisions include sub-prefectures"}
+{" Chile": " Level 3 divisions include municipalities"}
+{" China": " Level 3 divisions include counties"}
+{" C\u00f4te d'Ivoire": " Level 3 divisions include departments"}
+{" Ecuador": " Level 3 divisions include parishes"}
+{" Ethiopia": " Level 3 divisions include districts"}
+{" Finland": " Level 3 divisions include sub-regions"}
+{" France": " Level 3 divisions include districts"}
+{" Germany": " Level 3 divisions include municipalities"}
+{" Greece": " Level 3 divisions include municipalities"}
+{" Guinea": " Level 3 divisions include sub-prefectures"}
+{" Haiti": " Level 3 divisions include communes"}
+{" India": " Level 3 divisions include taluks"}
+{" Italy": " Level 3 divisions include communes"}
+{" Kenya": " Level 3 divisions include wards"}
+{" Lebanon": " Level 3 divisions include municipalities"}
+{" Liberia": " Level 3 divisions include clans"}
+{" Luxembourg": " Level 3 divisions include communes"}
+{" Madagascar": " Level 3 divisions include districts"}
+{" Mali": " Level 3 divisions include arrondissements"}
+{" Morocco": " Level 3 divisions include districts"}
+{" Mozambique": " Level 3 divisions include localities"}
+{" Myanmar": " Level 3 divisions include villages and townships"}
+{" Nepal": " Level 3 divisions include districts"}
+{" Niger": " Level 3 divisions include communes"}
+{" Pakistan": " Level 3 divisions include districts"}
+{" Panama": " Level 3 divisions include indigenous territories and municipalities"}
+{" Peru": " Level 3 divisions include districts"}
+{" Philippines": " Level 3 divisions include villages"}
+{" Portugal": " Level 3 divisions include parishes"}
+{" Rwanda": " Level 3 divisions include sectors"}
+{" Senegal": " Level 3 divisions include arrondissements"}
+{" Sierra Leone": " Level 3 divisions include chiefdoms"}
+{" South Africa": " Level 3 divisions include local and metropolitan municipalities"}
+{" South Sudan": " Level 3 divisions include payams"}
+{" Spain": " Level 3 divisions include comarcas"}
+{" Switzerland": " Level 3 divisions include municipalities"}
+{" Tanzania": " Level 3 divisions include islands and wards"}
+{" Thailand": " Level 3 divisions include subdistricts"}
+{" Timor-Leste": " Level 3 divisions include communities"}
+{" Uganda": " Level 3 divisions include sub-counties"}
+{" Vietnam": " Level 3 divisions include communes, rural communes, and wards"}
+{" C\u00f4te d'Ivoire": " Level 1 divisions include districts (german: bezirk) including district commissions and statutory cities"}
+{" North Korea": " Level 1 divisions include directly goverened cities, provinces, special cities and administrative regions"}
+{" United Kingdom": " Level 1 divisions include countries, constituent countries, overseas territories, and crown dependencies"}
+{" Australia": " Level 2 divisions include local government areas, including aboriginal councils, boroughs, cities, community government councils, district councils, municipalities, rural cities, shires, and territories"}
+{" Austria": " Level 2 divisions include districts (german: bezirk) including district commissions and statutory cities"}
+{" Democratic Republic of the Congo": ""}
+{" Bonaire": " Level 1 divisions include municipalities"}
+{" British Virgin Islands": " Level 1 divisions include districts"}
+{" Central African Republic": " Level 1 divisions include autonomous communes"}
+{" Democratic Republic of the Congo": " Level 1 divisions include provinces and 1 neutral city"}
+{" French Southern Territories": " Level 1 divisions include districts"}
+{" Northern Mariana Islands": " Level 1 divisions include municipalities"}
+{" Papua New Guinea": " Level 1 divisions include autonomous regions, districts, and provinces"}
+{" Saint Kitts and Nevis": " Level 1 divisions include parishes"}
+{" Saint Pierre and Miquelon": " Level 1 divisions include communes"}
+{" Saint Vincent and the Grenadines": " Level 1 divisions include parishes"}
+{" Sao Tome and Principe": " Level 1 divisions include municipalities"}
+{" Svalbard and Jan Mayen": " Level 1 divisions include territories"}
+{" Turks and Caicos Islands": " Level 1 divisions include districts"}
+{" United Arab Emirates": " Level 1 divisions include emirates"}
+{" United States Minor Outlying Islands": " Level 1 divisions include islands, atolls, and reefs"}
+{" United States Virgin Islands": " Level 1 divisions include districts"}
+{" Central African Republic": " Level 2 divisions include sub-prefectures"}
+{" Democratic Republic of the Congo": " Level 2 divisions include sub-regions"}
+{" Papua New Guinea": " Level 2 divisions include districts"}
