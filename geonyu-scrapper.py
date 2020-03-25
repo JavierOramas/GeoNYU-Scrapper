@@ -3,19 +3,18 @@ import requests
 from bs4 import BeautifulSoup
 from extras import Extract_href
 from extras import Extract_description
+from extras import Remove_extra
 import os.path as path
 import os
 import json
 import typer
+from pyexcel_ods import save_data
+from collections import OrderedDict
 
 app = typer.Typer()
 
-progress = 0
-total = 100
-progress_shp= 0
-total_shp = 100
+elems = []
 
-    
 def scrapper(action):
     
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
@@ -60,23 +59,32 @@ def scrapper(action):
                         f.write(requests.get(shps_links[i][:-len('>Original')],data=payload,headers=headers).contnt)
                 else:
                     progress = i
-                    elem = {str(name[i]).split(',')[1] : Extract_description(str(desc[i]))} #crear un elemento tipo diccionario
-                    json_file = open('shapefiles/description.json',mode='a') #abrir archivo jso
-                    json_file.write(json.dumps(elem, default=str)+'\n') #imprimir en el json el nuevo elemnto
+                    #elem = {str(name[i]).split(',')[1] : Extract_description(str(desc[i]))} #crear un elemento tipo diccionario
+                    elems.append(Remove_extra(str(name[i]).split(',')[1], Extract_description(str(desc[i]))))
+                    #print(elems)
+            if len(nextp[0][1:]) < 3:
+                data = {}
+                data['Sheet1'] = elems
+                print(elems)
+                print(data['Sheet1'])
+                save_data('descriptions.ods', data)
+                return
             page = path.join('https://geo.nyu.edu',nextp[0][1:]) #cambiar a la pagina siguiente
     except:
         pass
 
 
-# import streamlit as st
-# # from dinamyc import scrapper
+from colorama import Fore
+
 @app.command(name='get-polygons' ,help='Download all the polygons from geo.nyu.edu')
 def get_polygons():
     scrapper(True)
+    print(Fore.GREEN+"Done!")
     
 @app.command(name='get-description' ,help='Download the description of all polygons from geo.nyu.edu')
 def get_description():
     scrapper(False)
-    
+    print(Fore.GREEN+"Done!")
+
 if __name__ == "__main__":
     app()

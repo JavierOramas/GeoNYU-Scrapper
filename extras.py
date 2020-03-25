@@ -16,3 +16,15 @@ def Extract_description(item):
             resp = i
     
     return resp
+
+def Remove_extra(country,cad):
+    elem = cad.split('divisions include')
+    
+    if len(elem) < 2:
+        dat = [country,"",""]
+    else:
+        dat = [country[1:],elem[0][1:-1],elem[1][1:]]
+
+    #print(dat)
+    return dat
+    
