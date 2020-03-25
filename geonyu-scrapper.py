@@ -32,36 +32,24 @@ def scrapper(action):
             soup = BeautifulSoup(r.text,'lxml') #cargar pagina principal
             items = soup.findAll('h3', {'class':'index_title col-sm-9s cosl-lg-10 text-span'}) #tomar los elementos devueltos (poligonos)
             nextp = Extract_href(soup.findAll('a', {'rel':'next'}))
-            # percents = soup.findAll('span', {'class': 'page_entries'})
             links = Extract_href(items) #sacar los links de los elementos
             shps = [] #lista donde van a estar los links de descarga
             name = [] #lista donde van a estar los nombres de cada elemento
             desc = [] #lista donde van a estar los nombres de cada elemento
             for i in links:
-                # print(path.join('https://geo.nyu.edu',))
                 r2 = requests.get(path.join('https://geo.nyu.edu',i[1:]), data=payload, headers=headers) #cargar la pagina de cada elemento
                 dwnld = BeautifulSoup(r2.text, 'lxml') 
                 shps.append(dwnld.findAll('a', {'class': 'btn btn-primary btn-block download download-original'})) #seleccionar los links de descarga de cada pagina
                 name.append(dwnld.findAll('span', {'itemprop': 'name'})) #seleccionar los nombres de cada elemento
                 desc.append(dwnld.findAll('div', {'class': 'truncate-abstract'}))
-            #print(name)
             shps_links = Extract_href(shps) #sacar los links solos
-            #print(len(shps_links))
-            # print(len(shps))
-            # print(len(name)) 
             for i in range(len(shps_links)): #iterar sobre los links de descarga
-                total = len(shps_links)
-                total_shp = len(shps_links)
                 os.makedirs('shapefiles',exist_ok=True) #crear el directorio donde van a guardarse los archivos
                 if action:
-                    progress_shp = i
                     with open('shapefiles/'+str(name[i])[len('<span itemprop="name">'):-len('</span>')]+'.zip', 'b') as f: #descargar el archivo
                         f.write(requests.get(shps_links[i][:-len('>Original')],data=payload,headers=headers).contnt)
                 else:
-                    progress = i
-                    #elem = {str(name[i]).split(',')[1] : Extract_description(str(desc[i]))} #crear un elemento tipo diccionario
                     elems.append(Remove_extra(str(name[i]).split(',')[1], Extract_description(str(desc[i]))))
-                    #print(elems)
             if len(nextp[0][1:]) < 3:
                 data = {}
                 data['Sheet1'] = elems
