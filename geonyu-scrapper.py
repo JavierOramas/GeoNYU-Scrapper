@@ -69,6 +69,7 @@ from colorama import Fore
 def get_polygons():
     scrapper(True)
     convert_to_kml('shapefiles/')
+    os.system('rm -rf shapefiles')
     print(Fore.GREEN+"Done!")
     
 @app.command(name='get-description' ,help='Download the description of all polygons from geo.nyu.edu')
