@@ -74,6 +74,13 @@ def get_polygons():
 def get_description():
     scrapper(False)
     print(Fore.GREEN+"Done!")
+    
+
+@app.command(name='convert' ,help='Converts all shapefiles in shapefiles folder to kml ')
+def get_polygons():
+    convert_to_kml('shapefiles/')
+    os.system('rm -rf shapefiles')
+    print(Fore.GREEN+"Done!")
 
 if __name__ == "__main__":
     app()
