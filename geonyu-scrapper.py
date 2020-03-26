@@ -54,8 +54,6 @@ def scrapper(action):
             if len(nextp[0][1:]) < 3:
                 data = {}
                 data['Sheet1'] = elems
-                print(elems)
-                print(data['Sheet1'])
                 save_data('descriptions.ods', data)
                 return
             page = path.join('https://geo.nyu.edu',nextp[0][1:]) #cambiar a la pagina siguiente
