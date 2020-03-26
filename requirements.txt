@@ -5,3 +5,5 @@ typer==0.0.10
 json==2.0.9
 pyexcel_ods
 colorama==0.4.1
+zipfile
+os

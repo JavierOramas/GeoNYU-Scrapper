@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from extras import Extract_href
 from extras import Extract_description
 from extras import Remove_extra
+from extras import convert_to_kml
 import os.path as path
 import os
 import json
@@ -67,6 +68,7 @@ from colorama import Fore
 @app.command(name='get-polygons' ,help='Download all the polygons from geo.nyu.edu')
 def get_polygons():
     scrapper(True)
+    convert_to_kml('shapefiles/')
     print(Fore.GREEN+"Done!")
     
 @app.command(name='get-description' ,help='Download the description of all polygons from geo.nyu.edu')
