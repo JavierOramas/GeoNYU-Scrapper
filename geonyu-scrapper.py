@@ -12,6 +12,7 @@ import json
 import typer
 from pyexcel_ods import save_data
 from collections import OrderedDict
+import urllib.request
 
 app = typer.Typer()
 
@@ -24,13 +25,12 @@ def scrapper(action):
     payload = {
         'query':'test'
     }
-    page ='https://geo.nyu.edu/?per_page=100&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
+    page ='https://geo.nyu.edu/?per_page=10&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
     cont = 0
     # try:
     while(True):
         cont = cont+1
-        if cont > 3:
-            return
+       
         print("Processing page "+str(cont))
         r = requests.get(page,data = payload ,headers = headers)
         soup = BeautifulSoup(r.text,'lxml') #cargar pagina principal
@@ -50,8 +50,9 @@ def scrapper(action):
         for i in range(len(shps_links)): #iterar sobre los links de descarga
             os.makedirs('shapefiles',exist_ok=True) #crear el directorio donde van a guardarse los archivos
             if action:
-                with open('shapefiles/'+str(name[i])[len('<span itemprop="name">'):-len('</span>')]+'.zip', 'b') as f: #descargar el archivo
-                    f.write(requests.get(shps_links[i][:-len('>Original')],data=payload,headers=headers).contnt)
+                #with open('shapefiles/'+str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip', 'w+b') as f: #descargar el archivo
+                url = str(shps_links[i][:-len('>Original')])
+                urllib.request.urlretrieve(url,'shapefiles/'+str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip'.replace(' ', '_'))
             else:
                 elems.append(Remove_extra(str(name[i]).split(',')[1], Extract_description(str(desc[i]))))
         if len(nextp[0][1:]) < 3:
@@ -59,6 +60,8 @@ def scrapper(action):
             data['Sheet1'] = elems
             save_data('descriptions.ods', data)
             return
+        
+        return
         page = path.join('https://geo.nyu.edu',nextp[0][1:]) #cambiar a la pagina siguiente
     # except:
     #     pass
@@ -81,8 +84,8 @@ def get_description():
 
 @app.command(name='convert' ,help='Converts all shapefiles in shapefiles folder to kml ')
 def get_polygons():
-    convert_to_kml('shapefiles/')
-    os.system('rm -rf shapefiles')
+    convert_to_geojson('shapefile/')
+    os.system('rm -rf shapefile')
     print(Fore.GREEN+"Done!")
 
 if __name__ == "__main__":
