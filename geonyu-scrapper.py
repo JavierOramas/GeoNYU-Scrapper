@@ -85,7 +85,7 @@ def get_description():
 @app.command(name='convert' ,help='Converts all shapefiles in shapefiles folder to kml ')
 def get_polygons():
     convert_to_geojson('shapefile/')
-    #os.system('rm -rf shapefile')
+    os.system('rm -rf shapefile')
     print(Fore.GREEN+"Done!")
 
 if __name__ == "__main__":

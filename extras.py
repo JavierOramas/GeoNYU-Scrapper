@@ -1,9 +1,9 @@
-import shapefile
+# import shapefile
 import zipfile
 import os
 from os import path
 import json
-import pygeoj
+# import pygeoj
 
 def Extract_href(elements):
     new_list = []
@@ -63,25 +63,25 @@ def convert_to_geojson(directory:str):
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-            # try:
-            zf = zipfile.ZipFile(path.join(directory,str(f).replace(' ', '\ ')),'r') #cargar los .zip
-            os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
-            filename = ''                                     
-            for i in zf.namelist():                        #recorrer todo el .zip
-                zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
-                if i[-3:] == 'shp':                          #si el archivo es el .shp
-                    filename = i                             #guardar el nombre
-            
-            outputfi = f[:-3]+'json'                          #fichero .geojson de salida
-            outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
-            inputf = path.join('decompress',filename)    
-            
-            os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml
-            os.system('cp '+outputfo+' geojsons/'+outputfi)       #copiarlo a la carpeta KML
-            split_polygons(pygeoj.load('geojsons/'+outputfi),10)
-            #os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
-            # except:
-            #   pass
+            try:
+                zf = zipfile.ZipFile(path.join(directory,str(f).replace(' ', '\ ')),'r') #cargar los .zip
+                os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
+                filename = ''                                     
+                for i in zf.namelist():                        #recorrer todo el .zip
+                    zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
+                    if i[-3:] == 'shp':                          #si el archivo es el .shp
+                        filename = i                             #guardar el nombre
+
+                outputfi = f[:-3]+'json'                          #fichero .geojson de salida
+                outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
+                inputf = path.join('decompress',filename)    
+
+                os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml
+                os.system('cp '+outputfo+' geojsons/'+outputfi)       #copiarlo a la carpeta KML
+                #split_polygons(pygeoj.load('geojsons/'+outputfi),10)
+                os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
+            except:
+              pass
 
 def split_polygons(json_file, maxnum):
     for i in json_file:
