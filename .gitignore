@@ -4,3 +4,4 @@ shapefiles/*
 *.zip
 *.shp
 KML/*
+decompress/*
