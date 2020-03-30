@@ -99,11 +99,10 @@ def split_polygons(json_file, maxnum,addr):
         while len(coordinates)-last_idx > maxnum:
             new_list.insert(-1, coordinates[last_idx:last_idx+maxnum])
             last_idx = last_idx+maxnum+1
-        i.geometry.coordinates[0] = [new_list]
-        for j in i.geometry.coordinates[0]:
-            print(i.geometry.coordinates[0])
+        for j in new_list:
             dictio = dict(i.properties)
-            dictio['geometry'] = i.geometry.coordinates[0]
+            dictio['geometry'] = j
+            print(len(j))
             fi.write(json.dumps(dictio, default=str)+'\n')       
             #elem['index'] = index
     #json_file.save(addr) #poner nombre del json
