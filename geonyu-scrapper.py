@@ -6,6 +6,7 @@ from extras import Extract_description
 from extras import Remove_extra
 from extras import convert_to_kml
 from extras import convert_to_geojson
+from extras import count_points
 import os.path as path
 import os
 import json
@@ -82,10 +83,16 @@ def get_description():
     print(Fore.GREEN+"Done!")
     
 
-@app.command(name='convert' ,help='Converts all shapefiles in shapefiles folder to kml ')
+@app.command(name='convert' ,help='Converts all shapefiles in shapeile folder to geojsons output on geojsons folder')
 def get_polygons():
-    convert_to_geojson('shapefile/')
-    os.system('rm -rf shapefile')
+    convert_to_geojson('shapefile/',True)
+    #os.system('rm -rf shapefile')
+    print(Fore.GREEN+"Done!")
+    
+@app.command(name='count' ,help='Counts points on every polygon')
+def count():
+    convert_to_geojson('shapefile/',False)
+    #os.system('rm -rf shapefile')
     print(Fore.GREEN+"Done!")
 
 if __name__ == "__main__":
