@@ -83,7 +83,7 @@ def get_description():
     print(Fore.GREEN+"Done!")
     
 
-@app.command(name='convert' ,help='Converts all shapefiles in shapefiles folder to geojsons ')
+@app.command(name='convert' ,help='Converts all shapefiles in shapeile folder to geojsons output on geojsons folder')
 def get_polygons():
     convert_to_geojson('shapefile/',True)
     #os.system('rm -rf shapefile')

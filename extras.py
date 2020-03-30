@@ -78,29 +78,35 @@ def convert_to_geojson(directory:str, mode:bool):
             os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml
             os.system('cp '+outputfo+' geojsons/'+outputfi)       #copiarlo a la carpeta KML
             if mode:
-                split_polygons(pygeoj.load('geojsons/'+outputfi),10)
+                split_polygons(pygeoj.load('geojsons/'+outputfi),10,'geojsons/'+outputfi)
             else:
                 count_points(pygeoj.load('geojsons/'+outputfi))
             #os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
             # except:
             #   pass
 
-def split_polygons(json_file, maxnum):
+def split_polygons(json_file, maxnum,addr):
     a = []
+    index = 0
+    f = json_file
+    fi = open('test.json', 'w')
+    f.features = []
     for i in json_file:
+        index = index+1
         coordinates = i.geometry.coordinates[0]
-        a.append([i.properties['NAME_0'] ,len(coordinates)])
-        # last_idx = 0
-        # new_list = []
-        # while len(coordinates)-last_idx > maxnum:
-        #     new_list.insert(-1, coordinates[last_idx:last_idx+maxnum])
-        #     last_idx = last_idx+maxnum+1
-        # i.geometry.coordinates[0] = [new_list]
-        # print(len(i.geometry.coordinates))
-    # json_file.save('geojsons/test2.json')
-    a.sort()
-    print(a[0][0])
-    print([i[1] for i in a])
+        last_idx = 0
+        new_list = []
+        while len(coordinates)-last_idx > maxnum:
+            new_list.insert(-1, coordinates[last_idx:last_idx+maxnum])
+            last_idx = last_idx+maxnum+1
+        i.geometry.coordinates[0] = [new_list]
+        for j in i.geometry.coordinates[0]:
+            print(i.geometry.coordinates[0])
+            dictio = dict(i.properties)
+            dictio['geometry'] = i.geometry.coordinates[0]
+            fi.write(json.dumps(dictio, default=str)+'\n')       
+            #elem['index'] = index
+    #json_file.save(addr) #poner nombre del json
     
 def count_points(json_file):
     a = []
