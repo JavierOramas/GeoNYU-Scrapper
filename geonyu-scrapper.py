@@ -70,10 +70,11 @@ def scrapper(action):
 
 from colorama import Fore
 
-@app.command(name='get-polygons' ,help='Download all the polygons from geo.nyu.edu')
-def get_polygons():
+@app.command(name='get-polygons' ,help='Download all the polygons from geo.nyu.edu\
+    \n Args: maxnum = maximum number of points per polygon (default 1000)')
+def get_polygons(maxnum:int = 1000):
     scrapper(True)
-    convert_to_geojson('shapefiles/')
+    convert_to_geojson('shapefiles/',False,maxnum)
     os.system('rm -rf shapefiles')
     print(Fore.GREEN+"Done!")
     
@@ -83,9 +84,10 @@ def get_description():
     print(Fore.GREEN+"Done!")
     
 
-@app.command(name='convert' ,help='Converts all shapefiles in shapeile folder to geojsons output on geojsons folder')
-def get_polygons():
-    convert_to_geojson('shapefile/',True)
+@app.command(name='convert' ,help='Converts all shapefiles in shapeile folder to geojsons output on geojsons folder\
+    \n Args: maxnum = maximum number of points per polygon (default 1000)')
+def get_polygons(maxnum:int = 1000):
+    convert_to_geojson('shapefile/',True,maxnum)
     #os.system('rm -rf shapefile')
     print(Fore.GREEN+"Done!")
     

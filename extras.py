@@ -57,39 +57,40 @@ def convert_to_kml(directory:str):
            except:
               pass
 
-def convert_to_geojson(directory:str, mode:bool):
+def convert_to_geojson(directory:str, mode:bool, maxnum:int = 1000):
     os.makedirs('geojsons', exist_ok=True) #crear carpeta destino de los KML
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-            # try:
-            zf = zipfile.ZipFile(path.join(directory,str(f).replace(' ', '\ ')),'r') #cargar los .zip
-            os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
-            filename = ''                                     
-            for i in zf.namelist():                        #recorrer todo el .zip
-                zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
-                if i[-3:] == 'shp':                          #si el archivo es el .shp
-                    filename = i                             #guardar el nombre
-            
-            outputfi = f[:-3]+'json'                          #fichero .geojson de salida
-            outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
-            inputf = path.join('decompress',filename)    
-            
-            os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml
-            os.system('cp '+outputfo+' geojsons/'+outputfi)       #copiarlo a la carpeta KML
-            if mode:
-                split_polygons(pygeoj.load('geojsons/'+outputfi),10,'geojsons/'+outputfi)
-            else:
-                count_points(pygeoj.load('geojsons/'+outputfi))
-            #os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
-            # except:
-            #   pass
+            try:
+                zf = zipfile.ZipFile(path.join(directory,str(f).replace(' ', '\ ')),'r') #cargar los .zip
+                os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
+                filename = ''                                     
+                for i in zf.namelist():                        #recorrer todo el .zip
+                    zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
+                    if i[-3:] == 'shp':                          #si el archivo es el .shp
+                        filename = i                             #guardar el nombre
+                
+                outputfi = f[:-3]+'json'                          #fichero .geojson de salida
+                outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
+                inputf = path.join('decompress',filename)    
+                
+                os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml
+                os.system('cp '+outputfo+' geojsons/'+outputfi)       #copiarlo a la carpeta KML
+                if mode:
+                    split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,'geojsons/'+outputfi)
+                else:
+                    count_points(pygeoj.load('geojsons/'+outputfi))
+                os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
+            except:
+              pass
 
 def split_polygons(json_file, maxnum,addr):
     a = []
     index = 0
     f = json_file
-    fi = open('test.json', 'w')
+    os.system('rm -rf '+addr)
+    fi = open(addr, 'w')
     f.features = []
     for i in json_file:
         index = index+1
@@ -102,24 +103,13 @@ def split_polygons(json_file, maxnum,addr):
         for j in new_list:
             dictio = dict(i.properties)
             dictio['geometry'] = j
-            print(len(j))
             fi.write(json.dumps(dictio, default=str)+'\n')       
-            #elem['index'] = index
-    #json_file.save(addr) #poner nombre del json
     
 def count_points(json_file):
     a = []
     for i in json_file:
         coordinates = i.geometry.coordinates[0]
         a.append([i.properties['NAME_0'] ,len(coordinates)])
-        # last_idx = 0
-        # new_list = []
-        # while len(coordinates)-last_idx > maxnum:
-        #     new_list.insert(-1, coordinates[last_idx:last_idx+maxnum])
-        #     last_idx = last_idx+maxnum+1
-        # i.geometry.coordinates[0] = [new_list]
-        # print(len(i.geometry.coordinates))
-    # json_file.save('geojsons/test2.json')
     a.sort()
     print(a[0][0])
     print([i[1] for i in a])
