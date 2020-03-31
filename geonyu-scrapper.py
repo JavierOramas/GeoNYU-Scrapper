@@ -19,6 +19,8 @@ app = typer.Typer()
 
 elems = []
 
+page ='https://geo.nyu.edu/?per_page=100&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
+
 def scrapper(action):
     
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'}
@@ -26,7 +28,6 @@ def scrapper(action):
     payload = {
         'query':'test'
     }
-    page ='https://geo.nyu.edu/?per_page=100&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
     cont = 0
     # try:
     while(True):
@@ -69,6 +70,14 @@ def scrapper(action):
 
 
 from colorama import Fore
+
+@app.command(name='get-country' ,help='Download all the polygons from a given country and splits all polygons in 100 points polygons')
+def get_polygons(country:str):
+    page = page+"+%22"+country+"%22"
+    scrapper(True)
+    convert_to_geojson('shapefiles/',False)
+    os.system('rm -rf shapefiles')
+    print(Fore.GREEN+"Done!")
 
 @app.command(name='get-polygons' ,help='Download all the polygons from geo.nyu.edu and splits all polygons in 100 points polygons\
     \n Args: maxnum = maximum number of points per polygon (default 100)')
