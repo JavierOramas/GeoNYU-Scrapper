@@ -3,6 +3,7 @@ import os
 from os import path
 import json
 import pygeoj
+import unicodedata
 
 def Extract_href(elements):
     new_list = []
@@ -63,7 +64,7 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-            try:
+            # try:
                 if f.endswith('.zip'):
                     zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
                     os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
@@ -83,8 +84,8 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     else:
                         count_points(pygeoj.load('geojsons/'+outputfi))
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
-            except:
-              pass
+            # except:
+            #   pass
     
     os.system('rm -rf geojsons/')                
 
@@ -105,7 +106,7 @@ def split_polygons(json_file, maxnum,addr):
         for j in new_list:
             dictio = dict(i.properties)
             dictio = clean_dict(dictio)
-            # dictio.pop('')
+            dictio['index'] = index
             dictio['geometry'] = j
             fi.write(json.dumps(dictio, default=str)+'\n')
     fi.close()
