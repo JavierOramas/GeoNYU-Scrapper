@@ -95,6 +95,8 @@ def split_polygons(json_file, maxnum,addr):
     f = json_file
     fi = open('upload/'+addr, 'w')
     f.features = []
+    dic = {}
+    dic['poligonos'] = []
     for i in json_file:
         index = index+1
         coordinates = i.geometry.coordinates[0]
@@ -108,7 +110,8 @@ def split_polygons(json_file, maxnum,addr):
             dictio = clean_dict(dictio)
             dictio['index'] = index
             dictio['geometry'] = j
-            fi.write(json.dumps(dictio, default=str)+'\n')
+            dic['poligonos'].append(dictio)
+    fi.write(json.dumps(dic, default=str)+'\n')
     fi.close()
 
 def clean_dict(dictio):
