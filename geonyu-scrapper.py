@@ -87,16 +87,13 @@ def get_description():
 @app.command(name='convert' ,help='Converts all shapefiles in shapefile folder to json output on upload folder\
     \n Args: maxnum = maximum number of points per polygon (default 100)')
 def get_polygons(maxnum:int = 100):
-    # os.system('rm -rf upload/')
     os.makedirs('upload', exist_ok=True)
     convert_to_geojson('shapefile/',True,maxnum)
-    #os.system('rm -rf shapefile')
     print(Fore.GREEN+"Done!")
     
 @app.command(name='count' ,help='Counts points on every polygon')
 def count():
     convert_to_geojson('shapefile/',False)
-    #os.system('rm -rf shapefile')
     print(Fore.GREEN+"Done!")
 
 if __name__ == "__main__":
