@@ -63,9 +63,9 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-            #try:
+            try:
                 if f.endswith('.zip'):
-                    print(path.join(directory,str(f)))
+                    # print(path.join(directory,str(f)))
                     zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
                     os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
                     filename = ''                                     
@@ -81,19 +81,21 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a geojson
                     #os.system('cp '+outputfo+' geojsons/'+outputfi)       #copiarlo a la carpeta KML
                     if mode:
-                        split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,'geojsons/'+outputfi[:-4]+'splitted.json')
+                        os.system('rm -rf upload/')
+                        os.makedirs('upload', exist_ok=True) #crear carpeta destino de los KML
+                        split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,'upload/'+outputfi[:-4]+'splitted.json')
                     else:
                         count_points(pygeoj.load('geojsons/'+outputfi))
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
-            # except:
-            #   pass
+            except:
+              pass
 
 def split_polygons(json_file, maxnum,addr):
-    print('here')
     a = []
     index = 0
     f = json_file
-    os.system('rm -rf '+addr)
+    # sos.system('rm -rf '+addr)
+    os.system('touch '+addr)
     fi = open(addr, 'w')
     f.features = []
     for i in json_file:
@@ -105,12 +107,11 @@ def split_polygons(json_file, maxnum,addr):
             new_list.insert(-1, coordinates[last_idx:last_idx+maxnum])
             last_idx = last_idx+maxnum+1
         for j in new_list:
-            #print(i.properties)
             dictio = dict(i.properties)
             dictio['geometry'] = j
-            print(dictio)
-            fi.write(json.dumps(dictio, default=str)+'\n')       
-        #print(new_list)
+            fi.write(json.dumps(dictio, default=str)+'\n')
+        os.system('rm -rf geojsons/')
+            
 def count_points(json_file):
     a = []
     for i in json_file:
