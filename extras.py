@@ -104,11 +104,40 @@ def split_polygons(json_file, maxnum,addr):
             last_idx = last_idx+maxnum+1
         for j in new_list:
             dictio = dict(i.properties)
+            dictio = clean_dict(dictio)
+            # dictio.pop('')
             dictio['geometry'] = j
             fi.write(json.dumps(dictio, default=str)+'\n')
     fi.close()
 
+def clean_dict(dictio):
+    dictio.pop('HASC_1',None)
+    dictio.pop('CCN_1', None)
+    dictio.pop('CCA_1', None) 
+    dictio.pop('NL_NAME_1', None)
+    dictio.pop('HASC_2',None)
+    dictio.pop('CCN_2', None)
+    dictio.pop('CCA_2', None) 
+    dictio.pop('NL_NAME_2', None)
+    dictio.pop('HASC_3',None)
+    dictio.pop('CCN_3', None)
+    dictio.pop('CCA_3', None) 
+    dictio.pop('NL_NAME_3', None)
+    dictio.pop('HASC_4',None)
+    dictio.pop('CCN_4', None)
+    dictio.pop('CCA_4', None) 
+    dictio.pop('NL_NAME_4', None)
+    dictio.pop('HASC_5',None)
+    dictio.pop('CCN_5', None)
+    dictio.pop('CCA_5', None) 
+    dictio.pop('NL_NAME_5', None)
+    dictio.pop('HASC_6',None)
+    dictio.pop('CCN_6', None)
+    dictio.pop('CCA_6', None) 
+    dictio.pop('NL_NAME_6', None)
+    return dictio
             
+        
 def count_points(json_file):
     a = []
     for i in json_file:
