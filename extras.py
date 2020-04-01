@@ -111,24 +111,25 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     outputfi = f[:-3]+'.json'                          #fichero .geojson de salida
                     outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
                     inputf = path.join('decompress',filename)    
-                                                           
-                    reader = shapefile.Reader(inputf)
-                    reader.schema = 'iso19139'
-                    fields = reader.fields[1:]
-                    field_names = [field[0] for field in fields]
-                    buffer = []
-                    for sr in reader.shapeRecords():
-                        atr = dict(zip(field_names, sr.record))
-                        geom = sr.shape.__geo_interface__
-                        buffer.append(dict(type="Feature", \
-                            geometry=geom, properties=atr)) 
                     
-                    # write the GeoJSON file
-                    from json import dumps
-                    geojson = open(outputfo, "w")
-                    geojson.write(dumps({"type": "FeatureCollection",\
-                        "features": buffer}, indent=2) + "\n")
-                    geojson.close()
+                    os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml                                    
+                    # reader = shapefile.Reader(inputf)
+                    # #reader.schema = 'iso19139'
+                    # fields = reader.fields[1:]
+                    # field_names = [field[0] for field in fields]
+                    # buffer = []
+                    # for sr in reader.shapeRecords():
+                    #     atr = dict(zip(field_names, sr.record))
+                    #     geom = sr.shape.__geo_interface__
+                    #     buffer.append(dict(type="Feature", \
+                    #         geometry=geom, properties=atr)) 
+                    
+                    # # write the GeoJSON file
+                    # from json import dumps
+                    # geojson = open(outputfo, "w")
+                    # geojson.write(dumps({"type": "FeatureCollection",\
+                    #     "features": buffer}, indent=2) + "\n")
+                    # geojson.close()
                     if mode:
                         split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,outputfi[:-4]+'splitted.json')
                     else:
