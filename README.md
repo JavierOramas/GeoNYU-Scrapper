@@ -5,11 +5,6 @@ Herramienta de web scrapping para descargar todos los poligonos de https://geo.n
 
 Para instalar todos los paquetes necesarios ejecutar pip install -r requirements.txt
 
-es necesario instalar gdal en el sistema:
-* sudo apt-get install gdal (ubuntu)
-* sudo pacman -S gdal (Arch)
-
-
 intrucciones:
 * python geonyu-scrapper.py get-description - retorna el archivo description.ods (país,nivel,tipo de datos)
 * python geonyu-scrapper.py get-polygons [MAXNUM (cantidad máxima de puntos por trozo)] - descarga todos los poligonos picados en 'trozos' de 100 puntos como .json en la carpeta upload 
