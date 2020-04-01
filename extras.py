@@ -4,40 +4,7 @@ from os import path
 import json
 import pygeoj
 import unicodedata
-
-class shpdict:
-    def __init__(self):
-        self.shp = {}
-        shp["NAME_0"] = None
-        shp["NAME_1"] = None
-        shp["NAME_2"] = None
-        shp["NAME_3"] = None
-        shp["NAME_4"] = None
-        shp["NAME_5"] = None
-        shp["NAME_6"] = None   
-        shp['ID_1'] = None
-        shp['ID_2'] = None
-        shp['ID_3'] = None
-        shp['ID_4'] = None
-        shp['ID_5'] = None
-        shp['ID_6'] = None
-        shp['TYPE_0'] = None
-        shp['TYPE_1'] = None
-        shp['TYPE_2'] = None
-        shp['TYPE_3'] = None
-        shp['TYPE_4'] = None
-        shp['TYPE_5'] = None
-        shp['TYPE_6'] = None
-        shp['ENGTYPE_0'] = None
-        shp['ENGTYPE_1'] = None
-        shp['ENGTYPE_2'] = None
-        shp['ENGTYPE_3'] = None
-        shp['ENGTYPE_4'] = None
-        shp['ENGTYPE_5'] = None
-        shp['ENGTYPE_6'] = None       
-        
-        
-
+      
 def Extract_href(elements):
     new_list = []
     for item in elements:
@@ -113,12 +80,13 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     inputf = path.join('decompress',filename)    
                                                            
                     reader = shapefile.Reader(inputf)
-                    reader.schema = 'iso19139'
+                    # reader.schema = 'iso19139'
                     fields = reader.fields[1:]
                     field_names = [field[0] for field in fields]
                     buffer = []
                     for sr in reader.shapeRecords():
                         atr = dict(zip(field_names, sr.record))
+                        fill_atr(atr)
                         geom = sr.shape.__geo_interface__
                         buffer.append(dict(type="Feature", \
                             geometry=geom, properties=atr)) 
@@ -160,12 +128,73 @@ def split_polygons(json_file, maxnum,addr):
         for j in new_list:
             dictio = dict(i.properties)
             dictio = clean_dict(dictio)
+            if 'NAME_ENGLI' in dictio.keys():
+                dictio = transform_json(dictio)
             dictio['index'] = index
             dictio['geometry'] = j
             dic['poligonos'].append(dictio)
     fi.write(json.dumps(dic, default=str)+'\n')
     fi.close()
 
+def fill_atr(dic):
+    if not 'NAME_0' in dic:
+        dic['NAME_0'] = ''
+    if not 'NAME_1' in dic:
+        dic['NAME_1'] = ''
+    if not 'NAME_2' in dic:
+        dic['NAME_2'] = ''
+    if not 'NAME_3' in dic:
+        dic['NAME_3'] = ''
+    if not 'NAME_4' in dic:
+        dic['NAME_4'] = ''
+    if not 'NAME_5' in dic:
+        dic['NAME_5'] = ''
+    if not 'NAME_6' in dic:
+        dic['NAME_6'] = ''
+    
+    if not 'TYPE_0' in dic:
+        dic['TYPE_0'] = ''
+    if not 'TYPE_1' in dic:
+        dic['TYPE_1'] = ''
+    if not 'TYPE_2' in dic:
+        dic['TYPE_2'] = ''
+    if not 'TYPE_3' in dic:
+        dic['TYPE_3'] = ''
+    if not 'TYPE_4' in dic:
+        dic['TYPE_4'] = ''
+    if not 'TYPE_5' in dic:
+        dic['TYPE_5'] = ''
+    if not 'TYPE_6' in dic:
+        dic['TYPE_6'] = ''
+    
+    if not 'ENGTYPE_0' in dic:
+        dic['ENGTYPE_0'] = ''
+    if not 'ENGTYPE_1' in dic:
+        dic['ENGTYPE_1'] = ''
+    if not 'ENGTYPE_2' in dic:
+        dic['ENGTYPE_2'] = ''
+    if not 'ENGTYPE_3' in dic:
+        dic['ENGTYPE_3'] = ''
+    if not 'ENGTYPE_4' in dic:
+        dic['ENGTYPE_4'] = ''
+    if not 'ENGTYPE_5' in dic:
+        dic['ENGTYPE_5'] = ''
+    if not 'ENGTYPE_6' in dic:
+        dic['ENGTYPE_6'] = ''
+    
+    if not 'ID_1' in dic:
+        dic['ID_1'] = ''
+    if not 'ID_2' in dic:
+        dic['ID_2'] = ''
+    if not 'ID_3' in dic:
+        dic['ID_3'] = ''
+    if not 'ID_4' in dic:
+        dic['ID_4'] = ''
+    if not 'ID_5' in dic:
+        dic['ID_5'] = ''
+    if not 'ID_6' in dic:
+        dic['ID_6'] = ''  
+    
 def clean_dict(dictio):
     dictio.pop('ID_0', None)
     dictio.pop('ISO', None)
@@ -193,9 +222,25 @@ def clean_dict(dictio):
     dictio.pop('CCN_6', None)
     dictio.pop('CCA_6', None) 
     dictio.pop('NL_NAME_6', None)
+    dictio.pop('VARNAME_0', None)
+    dictio.pop('VARNAME_1', None)
+    dictio.pop('VARNAME_2', None)
+    dictio.pop('VARNAME_3', None)
+    dictio.pop('VARNAME_4', None)
+    dictio.pop('VARNAME_5', None)
+    dictio.pop('VARNAME_6', None)
     return dictio
-            
-        
+
+def transform_json(dic):
+    new_dic= {}
+    fill_atr(new_dic)
+    
+    new_dic['NAME_0'] = dic['NAME_ENGLI']
+    new_dic['TYPE_0'] = 'Country'
+    new_dic['ENGTYPE_0'] = 'Country'
+
+    return new_dic
+    
 def count_points(json_file):
     a = []
     for i in json_file:
