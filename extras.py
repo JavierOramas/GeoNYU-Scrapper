@@ -78,9 +78,9 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
                     inputf = path.join('decompress',filename)    
                     
-                    os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a geojson
+                    os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf+' -lco ENCODING=latin1') #convertir con ogr2ogr de shp a geojson
                     if mode:
-                        split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,outputfi[:-4]+'splitted.json')
+                        split_polygons(pygeoj.load('geojsons/'+outputfi,encoding='latin1'),maxnum,outputfi[:-4]+'splitted.json')
                     else:
                         count_points(pygeoj.load('geojsons/'+outputfi))
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         

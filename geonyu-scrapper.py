@@ -85,8 +85,8 @@ def get_polygons(country:str):
 def get_polygons(maxnum:int = 100):
     page ='https://geo.nyu.edu/?per_page=100&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
     scrapper(True,page)
-    convert_to_geojson('shapefiles/',False,maxnum)
-    os.system('rm -rf shapefiles')
+    convert_to_geojson('shapefile/',False,maxnum)
+    os.system('rm -rf shapefile')
     print(Fore.GREEN+"Done!")
     
 @app.command(name='get-description' ,help='Download the description of all polygons from geo.nyu.edu')
