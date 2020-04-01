@@ -5,6 +5,39 @@ import json
 import pygeoj
 import unicodedata
 
+class shpdict:
+    def __init__(self):
+        self.shp = {}
+        shp["NAME_0"] = None
+        shp["NAME_1"] = None
+        shp["NAME_2"] = None
+        shp["NAME_3"] = None
+        shp["NAME_4"] = None
+        shp["NAME_5"] = None
+        shp["NAME_6"] = None   
+        shp['ID_1'] = None
+        shp['ID_2'] = None
+        shp['ID_3'] = None
+        shp['ID_4'] = None
+        shp['ID_5'] = None
+        shp['ID_6'] = None
+        shp['TYPE_0'] = None
+        shp['TYPE_1'] = None
+        shp['TYPE_2'] = None
+        shp['TYPE_3'] = None
+        shp['TYPE_4'] = None
+        shp['TYPE_5'] = None
+        shp['TYPE_6'] = None
+        shp['ENGTYPE_0'] = None
+        shp['ENGTYPE_1'] = None
+        shp['ENGTYPE_2'] = None
+        shp['ENGTYPE_3'] = None
+        shp['ENGTYPE_4'] = None
+        shp['ENGTYPE_5'] = None
+        shp['ENGTYPE_6'] = None       
+        
+        
+
 def Extract_href(elements):
     new_list = []
     for item in elements:
@@ -60,6 +93,7 @@ def convert_to_kml(directory:str):
               pass
 
 def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
+    import shapefile
     os.makedirs('geojsons', exist_ok=True) #crear carpeta destino de los json
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
@@ -68,27 +102,43 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                 if f.endswith('.zip'):
                     zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
                     os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
-                    filename = ''                                     
+                    filename = 'iso 19139'                                     
                     for i in zf.namelist():                        #recorrer todo el .zip
                         zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
                         if i[-3:] == 'shp':                          #si el archivo es el .shp
                             filename = i                             #guardar el nombre
                     
-                    outputfi = f[:-3]+'kml'                          #fichero .geojson de salida
+                    outputfi = f[:-3]+'json'                          #fichero .geojson de salida
                     outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
                     inputf = path.join('decompress',filename)    
                     
-                    os.system('ogr2ogr -f KML '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a geojson
-                    os.system('ogr2ogr -f GeoJSON '+outputfo[:-3]+'json'+' '+outputfo) #convertir con ogr2ogr de shp a geojson
+                    reader = shapefile.Reader(inputf)
+                    reader.schema = 'iso19139'
+                    fields = reader.fields[1:]
+                    field_names = [field[0] for field in fields]
+                    buffer = []
+                    for sr in reader.shapeRecords():
+                        atr = dict(zip(field_names, sr.record))
+                        # print(atr)
+                        geom = sr.shape.__geo_interface__
+                        buffer.append(dict(type="Feature", \
+                            geometry=geom, properties=atr)) 
+                    
+                    # write the GeoJSON file
+                    from json import dumps
+                    geojson = open(outputfo, "w")
+                    geojson.write(dumps({"type": "FeatureCollection",\
+                        "features": buffer}, indent=2) + "\n")
+                    geojson.close()
                     if mode:
-                        split_polygons(pygeoj.load('geojsons/'+outputfi[:-3]+'json'),maxnum,outputfi[:-4]+'splitted.json')
+                        split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,outputfi[:-4]+'splitted.json')
                     else:
                         count_points(pygeoj.load('geojsons/'+outputfi))
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
             # except:
             #   pass
     
-    os.system('rm -rf geojsons/')                
+    # os.system('rm -rf geojsons/')                
 
 def split_polygons(json_file, maxnum,addr):
     a = []
