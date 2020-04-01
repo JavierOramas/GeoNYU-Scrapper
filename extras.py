@@ -86,7 +86,7 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     buffer = []
                     for sr in reader.shapeRecords():
                         atr = dict(zip(field_names, sr.record))
-                        fill_atr(atr)
+                        # fill_atr(atr)
                         geom = sr.shape.__geo_interface__
                         buffer.append(dict(type="Feature", \
                             geometry=geom, properties=atr)) 
@@ -105,7 +105,7 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
             except:
               pass
     
-    os.system('rm -rf geojsons/')                
+    # os.system('rm -rf geojsons/')                
 
 def split_polygons(json_file, maxnum,addr):
     a = []
@@ -122,14 +122,14 @@ def split_polygons(json_file, maxnum,addr):
         new_list = []
         
         while not len(coordinates)-last_idx < maxnum:
-            new_list.insert(-1, coordinates[last_idx:min(last_idx+maxnum, len(coordinates))])
+            new_list.append(coordinates[last_idx:min(last_idx+maxnum, len(coordinates))])
             last_idx = last_idx+maxnum
         new_list.append(coordinates[last_idx:])
         for j in new_list:
             dictio = dict(i.properties)
             dictio = clean_dict(dictio)
-            if 'NAME_ENGLI' in dictio.keys():
-                dictio = transform_json(dictio)
+            # if 'NAME_ENGLI' in dictio.keys():
+            #     dictio = transform_json(dictio)
             dictio['index'] = index
             dictio['geometry'] = j
             dic['poligonos'].append(dictio)
