@@ -98,20 +98,20 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-            # try:
+            try:
                 if f.endswith('.zip'):
                     zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
                     os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
-                    filename = 'iso 19139'                                     
+                               
                     for i in zf.namelist():                        #recorrer todo el .zip
                         zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
                         if i[-3:] == 'shp':                          #si el archivo es el .shp
                             filename = i                             #guardar el nombre
                     
-                    outputfi = f[:-3]+'json'                          #fichero .geojson de salida
+                    outputfi = f[:-3]+'.json'                          #fichero .geojson de salida
                     outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
                     inputf = path.join('decompress',filename)    
-                    
+                                                           
                     reader = shapefile.Reader(inputf)
                     reader.schema = 'iso19139'
                     fields = reader.fields[1:]
@@ -119,7 +119,6 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     buffer = []
                     for sr in reader.shapeRecords():
                         atr = dict(zip(field_names, sr.record))
-                        # print(atr)
                         geom = sr.shape.__geo_interface__
                         buffer.append(dict(type="Feature", \
                             geometry=geom, properties=atr)) 
@@ -135,10 +134,10 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     else:
                         count_points(pygeoj.load('geojsons/'+outputfi))
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
-            # except:
-            #   pass
+            except:
+              pass
     
-    # os.system('rm -rf geojsons/')                
+    os.system('rm -rf geojsons/')                
 
 def split_polygons(json_file, maxnum,addr):
     a = []
@@ -156,7 +155,7 @@ def split_polygons(json_file, maxnum,addr):
         
         while not len(coordinates)-last_idx < maxnum:
             new_list.insert(-1, coordinates[last_idx:min(last_idx+maxnum, len(coordinates))])
-            last_idx = last_idx+maxnum+1
+            last_idx = last_idx+maxnum
         new_list.append(coordinates[last_idx:])
         for j in new_list:
             dictio = dict(i.properties)
