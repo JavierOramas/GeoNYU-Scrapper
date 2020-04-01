@@ -1,10 +1,7 @@
-re==2.2.1
-requests==2.23.0
-bs4==4.8.0
-typer==0.0.10
-json==2.0.9
+re
+requests
+bs4
+typer
 pyexcel_ods
-colorama==0.4.1
-zipfile
-os
-pyshp==2.1.0
+colorama
+pyshp
