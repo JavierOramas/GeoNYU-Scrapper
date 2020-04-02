@@ -110,7 +110,7 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                         "features": buffer}, indent=2) + "\n")
                     geojson.close()
                     if mode:
-                        split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,outputfi[:-4]+'splitted.json')
+                        split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,outputfi[:-5]+'splitted.json')
                     else:
                         count_points(pygeoj.load('geojsons/'+outputfi))
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         

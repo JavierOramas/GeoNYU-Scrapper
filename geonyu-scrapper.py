@@ -14,6 +14,7 @@ import typer
 from pyexcel_ods import save_data
 from collections import OrderedDict
 import urllib.request
+import string
 
 app = typer.Typer()
 
@@ -54,7 +55,9 @@ def scrapper(action,page):
                 if action:
                     #with open('shapefiles/'+str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip', 'w+b') as f: #descargar el archivo
                     url = str(shps_links[i][:-len('>Original')])
-                    urllib.request.urlretrieve(url,'shapefiles/'+str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip'.replace(' ', ''))
+                    name = str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip'
+                    name = name.translate({ord(c): None for c in string.whitespace})
+                    urllib.request.urlretrieve(url,'shapefiles/'+name)
                 else:
                     elems.append(Remove_extra(str(name[i]).split(',')[1], Extract_description(str(desc[i]))))
             if len(nextp[0][1:]) < 3:
