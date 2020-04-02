@@ -54,7 +54,7 @@ def scrapper(action,page):
                 if action:
                     #with open('shapefiles/'+str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip', 'w+b') as f: #descargar el archivo
                     url = str(shps_links[i][:-len('>Original')])
-                    urllib.request.urlretrieve(url,'shapefiles/'+str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip'.replace(' ', '_'))
+                    urllib.request.urlretrieve(url,'shapefiles/'+str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip'.replace(' ', ''))
                 else:
                     elems.append(Remove_extra(str(name[i]).split(',')[1], Extract_description(str(desc[i]))))
             if len(nextp[0][1:]) < 3:
