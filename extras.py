@@ -137,7 +137,7 @@ def split_polygons(json_file, maxnum,addr):
                 index = process_boundary(i,j,maxnum,dic,index)
         else:
             for j in i.geometry.coordinates:
-                process_administrative(i,j,maxnum,dic,index)
+                index = process_administrative(i,j,maxnum,dic,index)
                     
     fi.write(json.dumps(dic, default=str)+'\n')
     fi.close()
