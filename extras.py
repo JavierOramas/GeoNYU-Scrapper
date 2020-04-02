@@ -134,7 +134,7 @@ def split_polygons(json_file, maxnum,addr):
         # print(len(i.geometry.coordinates))
         for j in i.geometry.coordinates:
             if 'NAME_ENGLI' in i.properties.keys():
-                process_boundary(i,j,maxnum,dic,index)
+                index = process_boundary(i,j,maxnum,dic,index)
             else:
                 process_administrative(i,j,maxnum,dic,index)
                     
@@ -144,9 +144,9 @@ def split_polygons(json_file, maxnum,addr):
 def process_boundary(i,j,maxnum,dic,index):
     last_idx = 0
     new_list = []
+    idx = index
     for coordinates in j:
-        index = index+1
-        # print(index)
+        idx = idx+1
         # print(len(coordinates))
         while last_idx < len(coordinates):
             new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
@@ -155,11 +155,13 @@ def process_boundary(i,j,maxnum,dic,index):
         for k in new_list:
             dictio = dict(i.properties)
             dictio = clean_dict(dictio)
-            if 'NAME_ENGLI' in dictio.keys():
-                dictio = transform_json(dictio)
-            dictio['index'] = index
+            # if 'NAME_ENGLI' in dictio.keys():
+            #     dictio = transform_json(dictio)
+            dictio['index'] = idx
             dictio['geometry'] = k
             dic['poligonos'].append(dictio)
+    
+    return idx
            
 def process_administrative(i,j, maxnum,dic,index):
     index = index+1
