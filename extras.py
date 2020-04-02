@@ -65,7 +65,7 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-            try:
+            # try:
                 if f.endswith('.zip'):
                     zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
                     os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
@@ -114,10 +114,10 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     else:
                         count_points(pygeoj.load('geojsons/'+outputfi))
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
-            except:
-              pass
+            # except:
+            #   pass
     
-    os.system('rm -rf geojsons/')                
+    # os.system('rm -rf geojsons/')                
 
 def split_polygons(json_file, maxnum,addr):
     a = []
@@ -129,22 +129,24 @@ def split_polygons(json_file, maxnum,addr):
     dic['poligonos'] = []
     for i in json_file:
         index = index+1
-        coordinates = i.geometry.coordinates[0]
         last_idx = 0
         new_list = []
         
-        while not len(coordinates)-last_idx < maxnum:
-            new_list.append(coordinates[last_idx:min(last_idx+maxnum, len(coordinates))])
-            last_idx = last_idx+maxnum
-        new_list.append(coordinates[last_idx:])
-        for j in new_list:
-            dictio = dict(i.properties)
-            dictio = clean_dict(dictio)
-            # if 'NAME_ENGLI' in dictio.keys():
-            #     dictio = transform_json(dictio)
-            dictio['index'] = index
-            dictio['geometry'] = j
-            dic['poligonos'].append(dictio)
+        for coordinates in i.geometry.coordinates:
+        
+            while last_idx < len(coordinates):
+                new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
+                last_idx = last_idx+maxnum
+                
+            for j in new_list:
+                dictio = dict(i.properties)
+                dictio = clean_dict(dictio)
+                # if 'NAME_ENGLI' in dictio.keys():
+                #     dictio = transform_json(dictio)
+                dictio['index'] = index
+                dictio['geometry'] = j
+                dic['poligonos'].append(dictio)
+
     fi.write(json.dumps(dic, default=str)+'\n')
     fi.close()
 
