@@ -39,7 +39,7 @@ def convert_to_kml(directory:str):
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-           try:
+        #    try:
                 if f.endswith('.zip'):
                     zf = zipfile.ZipFile(path.join(directory,f),'r') #cargar los .zip
                     os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
@@ -56,8 +56,8 @@ def convert_to_kml(directory:str):
                     os.system('ogr2ogr -f KML '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml
                     os.system('cp '+outputfo+' KML/'+outputfi)       #copiarlo a la carpeta KML
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo
-           except:
-              pass
+        #    except:
+        #       pass
 
 def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
     import shapefile
@@ -65,7 +65,7 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-            try:
+            # try:
                 if f.endswith('.zip'):
                     zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
                     os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
@@ -114,8 +114,8 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     else:
                         count_points(pygeoj.load('geojsons/'+outputfi))
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
-            except:
-              pass
+            # except:
+            #   pass
     
     os.system('rm -rf geojsons/')                
 

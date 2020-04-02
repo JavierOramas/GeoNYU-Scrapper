@@ -73,9 +73,9 @@ def scrapper(action,page):
 
 from colorama import Fore
 
-@app.command(name='get-country' ,help='Download all the polygons from a given country and splits all polygons in 100 points polygons')
-def get_polygons(country:str):
-    page ='https://geo.nyu.edu/?per_page=10&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
+@app.command(name='get-custom' ,help='Download all the polygons from a given country and splits all polygons in 100 points polygons')
+def get_custom(country:str):
+    page ='https://geo.nyu.edu/?utf8=✓&q=' #pagina inicial
     page = page+"+%22"+country+"%22"
     scrapper(True,page)
     convert_to_geojson('shapefiles/',False)
