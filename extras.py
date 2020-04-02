@@ -132,24 +132,51 @@ def split_polygons(json_file, maxnum,addr):
         new_list = []
         
         # print(len(i.geometry.coordinates))
-        for coordinates in i.geometry.coordinates:
-            index = index+1
-        
-            while last_idx < len(coordinates):
-                new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
-                last_idx = last_idx+maxnum
-                
-            for j in new_list:
-                dictio = dict(i.properties)
-                dictio = clean_dict(dictio)
-                # if 'NAME_ENGLI' in dictio.keys():
-                #     dictio = transform_json(dictio)
-                dictio['index'] = index
-                dictio['geometry'] = j
-                dic['poligonos'].append(dictio)
-
+        for j in i.geometry.coordinates:
+            if 'NAME_ENGLI' in i.properties.keys():
+                process_boundary(i,j,maxnum,dic,index)
+            else:
+                process_administrative(i,j,maxnum,dic,index)
+                    
     fi.write(json.dumps(dic, default=str)+'\n')
     fi.close()
+    
+def process_boundary(i,j,maxnum,dic,index):
+    last_idx = 0
+    new_list = []
+    for coordinates in j:
+        index = index+1
+        # print(index)
+        # print(len(coordinates))
+        while last_idx < len(coordinates):
+            new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
+            last_idx = last_idx+maxnum
+            
+        for k in new_list:
+            dictio = dict(i.properties)
+            dictio = clean_dict(dictio)
+            if 'NAME_ENGLI' in dictio.keys():
+                dictio = transform_json(dictio)
+            dictio['index'] = index
+            dictio['geometry'] = k
+            dic['poligonos'].append(dictio)
+           
+def process_administrative(i,j, maxnum,dic,index):
+    index = index+1
+    coordinates = j
+    last_idx = 0
+    new_list = []
+    while last_idx < len(coordinates):
+        new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
+        last_idx = last_idx+maxnum
+                        
+        for j in new_list:
+            dictio = dict(i.properties)
+            dictio = clean_dict(dictio)
+            dictio['index'] = index
+            dictio['geometry'] = j
+            dic['poligonos'].append(dictio)
+
 
 def fill_atr(dic):
     if not 'NAME_0' in dic:
