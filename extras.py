@@ -117,7 +117,7 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
             # except:
             #   pass
     
-    os.system('rm -rf geojsons/')                
+    #os.system('rm -rf geojsons/')                
 
 def split_polygons(json_file, maxnum,addr):
     a = []
@@ -128,11 +128,12 @@ def split_polygons(json_file, maxnum,addr):
     dic = {}
     dic['poligonos'] = []
     for i in json_file:
-        index = index+1
         last_idx = 0
         new_list = []
         
+        # print(len(i.geometry.coordinates))
         for coordinates in i.geometry.coordinates:
+            index = index+1
         
             while last_idx < len(coordinates):
                 new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
