@@ -1,7 +1,8 @@
-re
 requests
 bs4
 typer
 pyexcel_ods
 colorama
 pyshp
+lxml
+
