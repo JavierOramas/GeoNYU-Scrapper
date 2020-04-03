@@ -91,24 +91,24 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                         buffer.append(dict(type="Feature", \
                             geometry=geom, properties=atr)) 
                     
-                    # os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml                                    
-                    reader = shapefile.Reader(inputf)
-                    #reader.schema = 'iso19139'
-                    fields = reader.fields[1:]
-                    field_names = [field[0] for field in fields]
-                    buffer = []
-                    for sr in reader.shapeRecords():
-                        atr = dict(zip(field_names, sr.record))
-                        geom = sr.shape.__geo_interface__
-                        buffer.append(dict(type="Feature", \
-                            geometry=geom, properties=atr)) 
+                    os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml                                    
+                    # reader = shapefile.Reader(inputf)
+                    # #reader.schema = 'iso19139'
+                    # fields = reader.fields[1:]
+                    # field_names = [field[0] for field in fields]
+                    # buffer = []
+                    # for sr in reader.shapeRecords():
+                    #     atr = dict(zip(field_names, sr.record))
+                    #     geom = sr.shape.__geo_interface__
+                    #     buffer.append(dict(type="Feature", \
+                    #         geometry=geom, properties=atr)) 
                     
-                    # write the GeoJSON file
-                    from json import dumps
-                    geojson = open(outputfo, "w")
-                    geojson.write(dumps({"type": "FeatureCollection",\
-                        "features": buffer}, indent=2) + "\n")
-                    geojson.close()
+                    # # write the GeoJSON file
+                    # from json import dumps
+                    # geojson = open(outputfo, "w")
+                    # geojson.write(dumps({"type": "FeatureCollection",\
+                    #     "features": buffer}, indent=2) + "\n")
+                    # geojson.close()
                     if mode:
                         split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,outputfi[:-5]+'splitted.json')
                     else:
@@ -164,25 +164,37 @@ def process_boundary(i,j,maxnum,dic,index):
     return idx
            
 def process_administrative(i, maxnum,dic,index):
-    index = index+1
     # coordinates = j
     last_idx = 0
     new_list = []
     
-    for coordinates in i.geometry.coordinates:
-        
-            while last_idx < len(coordinates):
-                new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
-                last_idx = last_idx+maxnum
+    for coordinates_multi in i.geometry.coordinates:
+            # if not type(coordinates_multi[0][0]) == float:
+                for coordinates in coordinates_multi:
+                    index = index+1
+                    while last_idx < len(coordinates):
+                        new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
+                        last_idx = last_idx+maxnum
                 
-            for j in new_list:
-                dictio = dict(i.properties)
-                dictio = clean_dict(dictio)
-                # if 'NAME_ENGLI' in dictio.keys():
-                #     dictio = transform_json(dictio)
-                dictio['index'] = index
-                dictio['geometry'] = j
-                dic['poligonos'].append(dictio)
+                    for j in new_list:
+                        dictio = dict(i.properties)
+                        dictio = clean_dict(dictio)
+                        dictio['index'] = index
+                        dictio['geometry'] = j
+                        dic['poligonos'].append(dictio)
+            # else:
+            #     index = index+1
+            #     coordinates = coordinates_multi
+            #     while last_idx < len(coordinates):
+            #         new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
+            #         last_idx = last_idx+maxnum
+                    
+            #     for j in new_list:
+            #         dictio = dict(i.properties)
+            #         dictio = clean_dict(dictio)
+            #         dictio['index'] = index
+            #         dictio['geometry'] = j
+            #         dic['poligonos'].append(dictio)
 
 
 def fill_atr(dic):
