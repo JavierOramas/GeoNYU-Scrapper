@@ -131,11 +131,12 @@ def split_polygons(json_file, maxnum,addr):
         last_idx = 0
         new_list = []
         
+        if 'NAME_ENGLI' in i.properties.keys():
         # print(len(i.geometry.coordinates))
-        for j in i.geometry.coordinates:
-            if 'NAME_ENGLI' in i.properties.keys():
+            for j in i.geometry.coordinates:
                 index = process_boundary(i,j,maxnum,dic,index)
-            else:
+        else:
+            for j in i.geometry.coordinates:
                 process_administrative(i,j,maxnum,dic,index)
                     
     fi.write(json.dumps(dic, default=str)+'\n')
