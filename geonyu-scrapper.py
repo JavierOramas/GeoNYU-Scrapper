@@ -73,12 +73,12 @@ def scrapper(action,page):
 
 from colorama import Fore
 
-@app.command(name='get-custom' ,help='Download all the polygons from a given country and splits all polygons in 100 points polygons')
+@app.command(name='get-custom' ,help='Download all the polygons result from search and splits all polygons in 100 points polygons')
 def get_custom(country:str):
     page ='https://geo.nyu.edu/?utf8=✓&q=' #pagina inicial
     page = page+"+%22"+country+"%22"
     scrapper(True,page)
-    convert_to_geojson('shapefiles/',False)
+    convert_to_geojson('shapefiles/',True)
     os.system('rm -rf shapefiles')
     print(Fore.GREEN+"Done!")
 
@@ -87,7 +87,7 @@ def get_custom(country:str):
 def get_polygons(maxnum:int = 100):
     page ='https://geo.nyu.edu/?per_page=10&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
     scrapper(True,page)
-    convert_to_geojson('shapefiles/',False,maxnum)
+    convert_to_geojson('shapefiles/',True,maxnum)
     os.system('rm -rf shapefiles')
     print(Fore.GREEN+"Done!")
     
@@ -105,10 +105,10 @@ def get_polygons(maxnum:int = 100):
     convert_to_geojson('shapefiles/',True,maxnum)
     print(Fore.GREEN+"Done!")
     
-@app.command(name='count' ,help='Counts points on every polygon')
-def count():
-    convert_to_geojson('shapefile/',False)
-    print(Fore.GREEN+"Done!")
+# @app.command(name='count' ,help='Counts points on every polygon')
+# def count():
+#     convert_to_geojson('shapefile/',False)
+#     print(Fore.GREEN+"Done!")
 
 if __name__ == "__main__":
     app()
