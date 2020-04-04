@@ -79,17 +79,17 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                     outputfo = path.join('geojsons',str(outputfi).replace(" ", "_"))      #direccion del fichero de salida
                     inputf = path.join('decompress',str(filename).replace(" ", "_"))    
                                                            
-                    reader = shapefile.Reader(inputf)
-                    # reader.schema = 'iso19139'
-                    fields = reader.fields[1:]
-                    field_names = [field[0] for field in fields]
-                    buffer = []
-                    for sr in reader.shapeRecords():
-                        atr = dict(zip(field_names, sr.record))
-                        # fill_atr(atr)
-                        geom = sr.shape.__geo_interface__
-                        buffer.append(dict(type="Feature", \
-                            geometry=geom, properties=atr)) 
+                    # reader = shapefile.Reader(inputf)
+                    # # reader.schema = 'iso19139'
+                    # fields = reader.fields[1:]
+                    # field_names = [field[0] for field in fields]
+                    # buffer = []
+                    # for sr in reader.shapeRecords():
+                    #     atr = dict(zip(field_names, sr.record))
+                    #     # fill_atr(atr)
+                    #     geom = sr.shape.__geo_interface__
+                    #     buffer.append(dict(type="Feature", \
+                    #         geometry=geom, properties=atr)) 
                     
                     os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml                                    
                     # reader = shapefile.Reader(inputf)
@@ -131,8 +131,8 @@ def split_polygons(json_file, maxnum,addr):
         last_idx = 0
         new_list = []
         
-        if 'NAME_ENGLI' in i.properties.keys():
-        # print(len(i.geometry.coordinates))
+        if i.geometry.type == 'MultiPolygon':
+            
             for j in i.geometry.coordinates:
                 index = process_boundary(i,j,maxnum,dic,index)
         else:
