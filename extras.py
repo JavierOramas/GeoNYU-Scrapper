@@ -59,7 +59,7 @@ def convert_to_kml(directory:str):
         #    except:
         #       pass
 
-def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
+def convert_to_json(directory:str, mode:bool, maxnum:int = 100):
     import shapefile
     os.makedirs('geojsons', exist_ok=True) #crear carpeta destino de los json
     
@@ -72,235 +72,108 @@ def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
                                
                     for i in zf.namelist():                        #recorrer todo el .zip
                         zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
-                        if i[-3:] == 'shp':                          #si el archivo es el .shp
+                        if i.endswith('.shp'):                          #si el archivo es el .shp
                             filename = i                             #guardar el nombre
                     
                     outputfi = f[:-3]+'.json'                          #fichero .geojson de salida
-                    outputfo = path.join('geojsons',str(outputfi).replace(" ", "_"))      #direccion del fichero de salida
-                    inputf = path.join('decompress',str(filename).replace(" ", "_"))    
-                                                           
-                    # reader = shapefile.Reader(inputf)
-                    # # reader.schema = 'iso19139'
-                    # fields = reader.fields[1:]
-                    # field_names = [field[0] for field in fields]
-                    # buffer = []
-                    # for sr in reader.shapeRecords():
-                    #     atr = dict(zip(field_names, sr.record))
-                    #     # fill_atr(atr)
-                    #     geom = sr.shape.__geo_interface__
-                    #     buffer.append(dict(type="Feature", \
-                    #         geometry=geom, properties=atr)) 
+                    outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
+                    inputf = path.join('decompress',filename)
                     
-                    os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml                                    
-                    # reader = shapefile.Reader(inputf)
-                    # #reader.schema = 'iso19139'
-                    # fields = reader.fields[1:]
-                    # field_names = [field[0] for field in fields]
-                    # buffer = []
-                    # for sr in reader.shapeRecords():
-                    #     atr = dict(zip(field_names, sr.record))
-                    #     geom = sr.shape.__geo_interface__
-                    #     buffer.append(dict(type="Feature", \
-                    #         geometry=geom, properties=atr)) 
+                    reader = shapefile.Reader(inputf)
+                    #reader.schema = 'iso19139'
+                    fields = reader.fields[1:]
+                    field_names = [field[0] for field in fields]
+                    buffer = []
+                    for sr in reader.shapeRecords():
+                        atr = dict(zip(field_names, sr.record))
+                        geom = sr.shape.__geo_interface__
+                        buffer.append(dict(type="Feature", \
+                            geometry=geom, properties=atr)) 
                     
-                    # # write the GeoJSON file
-                    # from json import dumps
-                    # geojson = open(outputfo, "w")
-                    # geojson.write(dumps({"type": "FeatureCollection",\
-                    #     "features": buffer}, indent=2) + "\n")
-                    # geojson.close()
-                    if mode:
-                        split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,outputfi[:-5]+'splitted.json')
-                    else:
-                        count_points(pygeoj.load('geojsons/'+outputfi))
-                    os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
-            # except:
-            #   pass
-    
-    #os.system('rm -rf geojsons/')                
+                    # write the GeoJSON file
+                    from json import dumps
+                    geojson = open(outputfo, "w")
+                    geojson.write(dumps({"type": "FeatureCollection",\
+                        "features": buffer}, indent=2) + "\n")
+                    geojson.close()
 
-def split_polygons(json_file, maxnum,addr):
-    a = []
-    index = 0
-    f = json_file
-    fi = open('upload/'+addr, 'w')
-    f.features = []
-    dic = {}
-    dic['poligonos'] = []
-    for i in json_file:
-        last_idx = 0
-        new_list = []
-        
-        if i.geometry.type == 'MultiPolygon':
-            
-            for j in i.geometry.coordinates:
-                index = process_boundary(i,j,maxnum,dic,index)
-        else:
-            process_administrative(i,maxnum,dic,index)
-                    
-    fi.write(json.dumps(dic, default=str)+'\n')
-    fi.close()
+
+                    index = 0
+                    fi = open('upload/'+outputfi, 'w')
+                    dic = {}
+                    dic['poligonos'] = []
+                    count = 0
+
+                    for i in pygeoj.load('geojsons/'+outputfi):
+                        
+                        index = index+1
+                        
+                        if i.geometry.type == 'MultiPolygon':
+                            for j in i.geometry.coordinates:
+                                count = count + process_multipolygon(i,j,maxnum,dic,index,'MultiPolygon')
+                        else:
+                            dic['type'] = 'Polygon'
+                            count = count + process_polygon(i,maxnum,dic,index,'Polygon')
+                        
+                        dic['total'] = count
+                        fi.write(json.dumps(dic, default=str)+'\n')
+                    fi.close()
     
-def process_boundary(i,j,maxnum,dic,index):
+def process_multipolygon(i,j,maxnum,dic,index,type_of_geometry):
     last_idx = 0
     new_list = []
-    idx = index
+    index_2 = 0
     for coordinates in j:
-        idx = idx+1
-        # print(len(coordinates))
-        while last_idx < len(coordinates):
+        while last_idx <= len(coordinates):
             new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
             last_idx = last_idx+maxnum
             
         for k in new_list:
+            index_2 = index_2+1
             dictio = dict(i.properties)
             dictio = clean_dict(dictio)
-            # if 'NAME_ENGLI' in dictio.keys():
-            #     dictio = transform_json(dictio)
-            dictio['index'] = idx
+            dictio['type'] = type_of_geometry
+            dictio['index'] = index
+            dictio['index_2'] = index_2
             dictio['geometry'] = k
             dic['poligonos'].append(dictio)
     
-    return idx
-           
-def process_administrative(i, maxnum,dic,index):
-    # coordinates = j
+    return len(new_list)
+
+def process_polygon(i,maxnum,dic,index,type_of_geometry):
     last_idx = 0
     new_list = []
-    
-    for coordinates_multi in i.geometry.coordinates:
-            # if not type(coordinates_multi[0][0]) == float:
-                for coordinates in coordinates_multi:
-                    index = index+1
-                    while last_idx < len(coordinates):
-                        new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
-                        last_idx = last_idx+maxnum
-                
-                    for j in new_list:
-                        dictio = dict(i.properties)
-                        dictio = clean_dict(dictio)
-                        dictio['index'] = index
-                        dictio['geometry'] = j
-                        dic['poligonos'].append(dictio)
-            # else:
-            #     index = index+1
-            #     coordinates = coordinates_multi
-            #     while last_idx < len(coordinates):
-            #         new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
-            #         last_idx = last_idx+maxnum
-                    
-            #     for j in new_list:
-            #         dictio = dict(i.properties)
-            #         dictio = clean_dict(dictio)
-            #         dictio['index'] = index
-            #         dictio['geometry'] = j
-            #         dic['poligonos'].append(dictio)
 
+    for coordinates in i.geometry.coordinates:
+        index = index+1
+        while last_idx < len(coordinates):
+            new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
+            last_idx = last_idx+maxnum
+    
+        for j in new_list:
+            dictio = dict(i.properties)
+            dictio = clean_dict(dictio)
+            dictio['type'] = type_of_geometry
+            dictio['index'] = index
+            dictio['geometry'] = j
+            dic['poligonos'].append(dictio)
+            
+    return len(new_list)
 
-def fill_atr(dic):
-    if not 'NAME_0' in dic:
-        dic['NAME_0'] = ''
-    if not 'NAME_1' in dic:
-        dic['NAME_1'] = ''
-    if not 'NAME_2' in dic:
-        dic['NAME_2'] = ''
-    if not 'NAME_3' in dic:
-        dic['NAME_3'] = ''
-    if not 'NAME_4' in dic:
-        dic['NAME_4'] = ''
-    if not 'NAME_5' in dic:
-        dic['NAME_5'] = ''
-    if not 'NAME_6' in dic:
-        dic['NAME_6'] = ''
+def clean_dict(dic):
+    keys_needed = ['ID_1', 'ID_2','ID_3','ID_4','ID_5','ID_6','NAME_0','NAME_1','NAME_2','NAME_3','NAME_4','NAME_5','NAME_6', 'geometry']
     
-    if not 'TYPE_0' in dic:
-        dic['TYPE_0'] = ''
-    if not 'TYPE_1' in dic:
-        dic['TYPE_1'] = ''
-    if not 'TYPE_2' in dic:
-        dic['TYPE_2'] = ''
-    if not 'TYPE_3' in dic:
-        dic['TYPE_3'] = ''
-    if not 'TYPE_4' in dic:
-        dic['TYPE_4'] = ''
-    if not 'TYPE_5' in dic:
-        dic['TYPE_5'] = ''
-    if not 'TYPE_6' in dic:
-        dic['TYPE_6'] = ''
+    if 'NAME_ENGLI' in dic.keys():
+        dic["NAME_0"] = dic["NAME_ENGLI"]
     
-    if not 'ENGTYPE_0' in dic:
-        dic['ENGTYPE_0'] = ''
-    if not 'ENGTYPE_1' in dic:
-        dic['ENGTYPE_1'] = ''
-    if not 'ENGTYPE_2' in dic:
-        dic['ENGTYPE_2'] = ''
-    if not 'ENGTYPE_3' in dic:
-        dic['ENGTYPE_3'] = ''
-    if not 'ENGTYPE_4' in dic:
-        dic['ENGTYPE_4'] = ''
-    if not 'ENGTYPE_5' in dic:
-        dic['ENGTYPE_5'] = ''
-    if not 'ENGTYPE_6' in dic:
-        dic['ENGTYPE_6'] = ''
+    delete = []
     
-    if not 'ID_1' in dic:
-        dic['ID_1'] = ''
-    if not 'ID_2' in dic:
-        dic['ID_2'] = ''
-    if not 'ID_3' in dic:
-        dic['ID_3'] = ''
-    if not 'ID_4' in dic:
-        dic['ID_4'] = ''
-    if not 'ID_5' in dic:
-        dic['ID_5'] = ''
-    if not 'ID_6' in dic:
-        dic['ID_6'] = ''  
-    
-def clean_dict(dictio):
-    dictio.pop('ID_0', None)
-    dictio.pop('ISO', None)
-    dictio.pop('HASC_1',None)
-    dictio.pop('CCN_1', None)
-    dictio.pop('CCA_1', None) 
-    dictio.pop('NL_NAME_1', None)
-    dictio.pop('HASC_2',None)
-    dictio.pop('CCN_2', None)
-    dictio.pop('CCA_2', None) 
-    dictio.pop('NL_NAME_2', None)
-    dictio.pop('HASC_3',None)
-    dictio.pop('CCN_3', None)
-    dictio.pop('CCA_3', None) 
-    dictio.pop('NL_NAME_3', None)
-    dictio.pop('HASC_4',None)
-    dictio.pop('CCN_4', None)
-    dictio.pop('CCA_4', None) 
-    dictio.pop('NL_NAME_4', None)
-    dictio.pop('HASC_5',None)
-    dictio.pop('CCN_5', None)
-    dictio.pop('CCA_5', None) 
-    dictio.pop('NL_NAME_5', None)
-    dictio.pop('HASC_6',None)
-    dictio.pop('CCN_6', None)
-    dictio.pop('CCA_6', None) 
-    dictio.pop('NL_NAME_6', None)
-    dictio.pop('VARNAME_0', None)
-    dictio.pop('VARNAME_1', None)
-    dictio.pop('VARNAME_2', None)
-    dictio.pop('VARNAME_3', None)
-    dictio.pop('VARNAME_4', None)
-    dictio.pop('VARNAME_5', None)
-    dictio.pop('VARNAME_6', None)
-    return dictio
-
-def transform_json(dic):
-    new_dic= {}
-    fill_atr(new_dic)
-    
-    new_dic['NAME_0'] = dic['NAME_ENGLI']
-    new_dic['TYPE_0'] = 'Country'
-    new_dic['ENGTYPE_0'] = 'Country'
-
-    return new_dic
+    for i in dic.keys():
+        if not i in keys_needed:
+            delete.append(i)
+    for i in delete:
+        dic.pop(i, None)
+    return dic        
     
 def count_points(json_file):
     a = []

@@ -5,7 +5,7 @@ from extras import Extract_href
 from extras import Extract_description
 from extras import Remove_extra
 from extras import convert_to_kml
-from extras import convert_to_geojson
+from extras import convert_to_json
 from extras import count_points
 import os.path as path
 import os
@@ -78,7 +78,7 @@ def get_custom(country:str):
     page ='https://geo.nyu.edu/?utf8=✓&q=' #pagina inicial
     page = page+"+%22"+country+"%22"
     scrapper(True,page)
-    convert_to_geojson('shapefiles/',True)
+    convert_to_json('shapefiles/',True)
     os.system('rm -rf shapefiles')
     print(Fore.GREEN+"Done!")
 
@@ -87,7 +87,7 @@ def get_custom(country:str):
 def get_polygons(maxnum:int = 100):
     page ='https://geo.nyu.edu/?per_page=10&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
     scrapper(True,page)
-    convert_to_geojson('shapefiles/',True,maxnum)
+    convert_to_json('shapefiles/',True,maxnum)
     os.system('rm -rf shapefiles')
     print(Fore.GREEN+"Done!")
     
@@ -102,7 +102,7 @@ def get_description():
     \n Args: maxnum = maximum number of points per polygon (default 100)')
 def get_polygons(maxnum:int = 100):
     os.makedirs('upload', exist_ok=True)
-    convert_to_geojson('shapefiles/',True,maxnum)
+    convert_to_json('shapefiles/',True,maxnum)
     print(Fore.GREEN+"Done!")
     
 # @app.command(name='count' ,help='Counts points on every polygon')
