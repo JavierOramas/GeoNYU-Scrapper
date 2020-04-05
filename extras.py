@@ -97,13 +97,14 @@ def convert_to_json(directory:str, mode:bool, maxnum:int = 100):
                         "features": buffer}, indent=2) + "\n")
                     geojson.close()
 
+
                     index = 0
                     fi = open('upload/'+outputfi, 'w')
                     f.features = []
                     dic = {}
                     dic['poligonos'] = []
                     count = 0
-                    
+
                     for i in pygeoj.load('geojsons/'+outputfi):
                         
                         index = index+1

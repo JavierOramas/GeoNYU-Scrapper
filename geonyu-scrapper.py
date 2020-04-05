@@ -98,7 +98,7 @@ def get_description():
     print(Fore.GREEN+"Done!")
     
 
-@app.command(name='convert' ,help='Converts all shapefiles in shapefile folder to json output on upload folder\
+@app.command(name='convert' ,help='Converts all shapefiles in shapefile folder to json, output on upload folder\
     \n Args: maxnum = maximum number of points per polygon (default 100)')
 def get_polygons(maxnum:int = 100):
     os.makedirs('upload', exist_ok=True)
