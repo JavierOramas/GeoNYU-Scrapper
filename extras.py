@@ -160,6 +160,94 @@ def process_polygon(i,maxnum,dic,index,type_of_geometry):
             
     return len(new_list)
 
+def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
+    import shapefile
+    os.makedirs('geojsons', exist_ok=True) #crear carpeta destino de los json
+    
+    for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
+       for f in files:                      #recorrer todos los .zip 
+            # try:
+                if f.endswith('.zip'):
+                    zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
+                    os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
+                               
+                    for i in zf.namelist():                        #recorrer todo el .zip
+                        zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
+                        if i.endswith('.shp'):                          #si el archivo es el .shp
+                            filename = i                             #guardar el nombre
+                    
+                    outputfi = f[:-3]+'.json'                          #fichero .geojson de salida
+                    outputfo = path.join('geojsons',str(outputfi).replace(" ", "_"))      #direccion del fichero de salida
+                    inputf = path.join('decompress',str(filename).replace(" ", "_"))    
+                                                           
+                    reader = shapefile.Reader(inputf)
+                    # reader.schema = 'iso19139'
+                    fields = reader.fields[1:]
+                    field_names = [field[0] for field in fields]
+                    buffer = []
+                    for sr in reader.shapeRecords():
+                        atr = dict(zip(field_names, sr.record))
+                        # fill_atr(atr)
+                        geom = sr.shape.__geo_interface__
+                        buffer.append(dict(type="Feature", \
+                            geometry=geom, properties=atr)) 
+                    
+                    # os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml                                    
+                    reader = shapefile.Reader(inputf)
+                    #reader.schema = 'iso19139'
+                    fields = reader.fields[1:]
+                    field_names = [field[0] for field in fields]
+                    buffer = []
+                    for sr in reader.shapeRecords():
+                        atr = dict(zip(field_names, sr.record))
+                        geom = sr.shape.__geo_interface__
+                        buffer.append(dict(type="Feature", \
+                            geometry=geom, properties=atr)) 
+                    
+                    # write the GeoJSON file
+                    from json import dumps
+                    geojson = open(outputfo, "w")
+                    geojson.write(dumps({"type": "FeatureCollection",\
+                        "features": buffer}, indent=2) + "\n")
+                    geojson.close()
+                    split_polygons(pygeoj.load('geojsons/'+outputfi),maxnum,outputfi[:-5]+'splitted.json')
+                    os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo         
+            # except:
+            #   pass
+    
+    os.system('rm -rf geojsons/')                
+
+def split_polygons(json_file, maxnum,addr):
+    a = []
+    index = 0
+    f = json_file
+    fi = open('upload/'+addr, 'w')
+    f.features = []
+    dic = {}
+    dic['poligonos'] = []
+    for i in json_file:
+        index = index+1
+        last_idx = 0
+        new_list = []
+        
+        for coordinates in i.geometry.coordinates:
+        
+            while last_idx < len(coordinates):
+                new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
+                last_idx = last_idx+maxnum
+                
+            for j in new_list:
+                dictio = dict(i.properties)
+                dictio = clean_dict(dictio)
+                dictio['type'] = i.geometry.type
+                dictio['index'] = index
+                dictio['geometry'] = j
+                dic['poligonos'].append(dictio)
+                dic['total'] = len(new_list)
+                
+    fi.write(json.dumps(dic, default=str)+'\n')
+    fi.close()
+
 def clean_dict(dic):
     keys_needed = ['ID_1', 'ID_2','ID_3','ID_4','ID_5','ID_6','NAME_0','NAME_1','NAME_2','NAME_3','NAME_4','NAME_5','NAME_6', 'geometry']
     
@@ -175,11 +263,3 @@ def clean_dict(dic):
         dic.pop(i, None)
     return dic        
     
-def count_points(json_file):
-    a = []
-    for i in json_file:
-        coordinates = i.geometry.coordinates[0]
-        a.append([i.properties['NAME_0'] ,len(coordinates)])
-    a.sort()
-    print(a[0][0])
-    print([i[1] for i in a])
