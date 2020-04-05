@@ -100,7 +100,6 @@ def convert_to_json(directory:str, mode:bool, maxnum:int = 100):
 
                     index = 0
                     fi = open('upload/'+outputfi, 'w')
-                    f.features = []
                     dic = {}
                     dic['poligonos'] = []
                     count = 0
@@ -111,10 +110,10 @@ def convert_to_json(directory:str, mode:bool, maxnum:int = 100):
                         
                         if i.geometry.type == 'MultiPolygon':
                             for j in i.geometry.coordinates:
-                                count = count + process_multipolygon(i,j,maxnum,dic,count,index,'MultiPolygon')
+                                count = count + process_multipolygon(i,j,maxnum,dic,index,'MultiPolygon')
                         else:
                             dic['type'] = 'Polygon'
-                            count = count + process_polygon(i,maxnum,dic,count,index,'Polygon')
+                            count = count + process_polygon(i,maxnum,dic,index,'Polygon')
                         
                         dic['total'] = count
                         fi.write(json.dumps(dic, default=str)+'\n')
@@ -145,7 +144,7 @@ def process_polygon(i,maxnum,dic,index,type_of_geometry):
     last_idx = 0
     new_list = []
 
-    for coordinates in i.coordinates:
+    for coordinates in i.geometry.coordinates:
         index = index+1
         while last_idx < len(coordinates):
             new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
@@ -162,15 +161,18 @@ def process_polygon(i,maxnum,dic,index,type_of_geometry):
     return len(new_list)
 
 def clean_dict(dic):
-    keys_needed = ['ID_0', 'ID_1', 'ID_2','ID_3','ID_4','ID_5','ID_6','NAME_0','NAME_1','NAME_2','NAME_3','NAME_4','NAME_5','NAME_6', 'geometry']
+    keys_needed = ['ID_1', 'ID_2','ID_3','ID_4','ID_5','ID_6','NAME_0','NAME_1','NAME_2','NAME_3','NAME_4','NAME_5','NAME_6', 'geometry']
     
     if 'NAME_ENGLI' in dic.keys():
         dic["NAME_0"] = dic["NAME_ENGLI"]
     
+    delete = []
+    
     for i in dic.keys():
         if not i in keys_needed:
-            dic.popitem(i)
-    
+            delete.append(i)
+    for i in delete:
+        dic.pop(i, None)
     return dic        
     
 def count_points(json_file):
