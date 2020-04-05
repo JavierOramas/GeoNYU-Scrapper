@@ -6,7 +6,7 @@ from extras import Extract_description
 from extras import Remove_extra
 from extras import convert_to_kml
 from extras import convert_to_json
-from extras import count_points
+from extras import convert_to_geojson
 import os.path as path
 import os
 import json
@@ -102,7 +102,7 @@ def get_description():
     \n Args: maxnum = maximum number of points per polygon (default 100)')
 def get_polygons(maxnum:int = 100):
     os.makedirs('upload', exist_ok=True)
-    convert_to_json('shapefiles/',True,maxnum)
+    convert_to_geojson('shapefiles/',True,maxnum)
     print(Fore.GREEN+"Done!")
     
 # @app.command(name='count' ,help='Counts points on every polygon')
