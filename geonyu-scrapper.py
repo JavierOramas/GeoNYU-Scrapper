@@ -88,6 +88,7 @@ def get_custom(country:str):
 def get_polygons(maxnum:int = 1000):
     page ='https://geo.nyu.edu/?per_page=10&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
     scrapper(True,page)
+    os.makedirs('upload', exist_ok=True)
     convert_to_json('shapefiles/',True,maxnum)
     os.system('rm -rf shapefiles')
     print(Fore.GREEN+"Done!")
