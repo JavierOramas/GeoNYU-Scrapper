@@ -58,8 +58,8 @@ def convert_to_kml(directory:str):
                     os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo
         #    except:
         #       pass
-
-def convert_to_json(directory:str, mode:bool, maxnum:int = 100):
+    
+def convert_to_json(directory:str, mode:bool, maxnum:int = 1000):
     import shapefile
     os.makedirs('geojsons', exist_ok=True) #crear carpeta destino de los json
     
@@ -105,9 +105,6 @@ def convert_to_json(directory:str, mode:bool, maxnum:int = 100):
                     count = 0
 
                     for i in pygeoj.load('geojsons/'+outputfi):
-                        
-                        index = index+1
-                        
                         if i.geometry.type == 'MultiPolygon':
                             for j in i.geometry.coordinates:
                                 count = count + process_multipolygon(i,j,maxnum,dic,index,'MultiPolygon')
@@ -118,18 +115,92 @@ def convert_to_json(directory:str, mode:bool, maxnum:int = 100):
                         dic['total'] = count
                         fi.write(json.dumps(dic, default=str)+'\n')
                     fi.close()
+
+def count_deep(directory:str):
+    import shapefile
+    os.makedirs('geojsons', exist_ok=True) #crear carpeta destino de los json
+    for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
+    #    print('here')
+       for f in files:                      #recorrer todos los .zip 
+            # try:
+                if f.endswith('.zip'):
+                    zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
+                    os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
+                               
+                    for i in zf.namelist():                        #recorrer todo el .zip
+                        zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
+                        if i.endswith('.shp'):                          #si el archivo es el .shp
+                            filename = i                             #guardar el nombre
+                    
+                    outputfi = f[:-3]+'.json'                          #fichero .geojson de salida
+                    outputfo = path.join('geojsons',outputfi)      #direccion del fichero de salida
+                    inputf = path.join('decompress',filename)
+                    
+                    reader = shapefile.Reader(inputf)
+                    #reader.schema = 'iso19139'
+                    fields = reader.fields[1:]
+                    field_names = [field[0] for field in fields]
+                    buffer = []
+                    for sr in reader.shapeRecords():
+                        atr = dict(zip(field_names, sr.record))
+                        geom = sr.shape.__geo_interface__
+                        buffer.append(dict(type="Feature", \
+                            geometry=geom, properties=atr)) 
+                    
+                    # write the GeoJSON file
+                    from json import dumps
+                    geojson = open(outputfo, "w")
+                    geojson.write(dumps({"type": "FeatureCollection",\
+                        "features": buffer}, indent=2) + "\n")
+                    geojson.close()
+                    
+
+                    index = 0
+                    fi = open('upload/'+outputfi, 'w')
+                    dic = {}
+                    dic['poligonos'] = []
+                    count = 0
+                    sizes = [[],[],[]]
+
+                    for i in pygeoj.load('geojsons/'+outputfi):
+                        if i.geometry.type == 'MultiPolygon':
+                            # sizes = list(len(i.geometry.coordinates))
+                            sizes[0].append(len(i.geometry.coordinates))
+                            count = 0
+                            for j in i.geometry.coordinates:
+                                count = count + 1
+                                sizes[1].append(len(j))
+                                count2 = 0
+                                for k in j:
+                                    count2 = count2+1
+                                    sizes[2].append(len(k))    
+                        else:
+                            sizes[0].append(len(i.geometry.coordinates))
+                            count = 0
+                            for j in i.geometry.coordinates:
+                                count = count + 1
+                                sizes[1].append(len(j))
+                    fi.write(str(sizes[0]))
+                    fi.write(str(sizes[1]))
+                    fi.write(str(sizes[2]))
+                    fi
+                    fi.close()
+
     
 def process_multipolygon(i,j,maxnum,dic,index,type_of_geometry):
     last_idx = 0
     new_list = []
     index_2 = 0
     for coordinates in j:
+        # print(coordinates)
+        index_2= index_2+1
         while last_idx <= len(coordinates):
             new_list.append(coordinates[last_idx:min(len(coordinates),last_idx+maxnum)])
             last_idx = last_idx+maxnum
-            
+        # print(len(new_list))
         for k in new_list:
             index_2 = index_2+1
+            dictio = {}
             dictio = dict(i.properties)
             dictio = clean_dict(dictio)
             dictio['type'] = type_of_geometry
@@ -160,7 +231,7 @@ def process_polygon(i,maxnum,dic,index,type_of_geometry):
             
     return len(new_list)
 
-def convert_to_geojson(directory:str, mode:bool, maxnum:int = 100):
+def convert_to_geojson(directory:str, mode:bool, maxnum:int = 1000):
     import shapefile
     os.makedirs('geojsons', exist_ok=True) #crear carpeta destino de los json
     
