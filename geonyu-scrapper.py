@@ -42,13 +42,13 @@ def scrapper(action,page):
             nextp = Extract_href(soup.findAll('a', {'rel':'next'}))
             links = Extract_href(items) #sacar los links de los elementos
             shps = [] #lista donde van a estar los links de descarga
-            name = [] #lista donde van a estar los nombres de cada elemento
+            names = [] #lista donde van a estar los nombres de cada elemento
             desc = [] #lista donde van a estar los nombres de cada elemento
             for i in links:
                 r2 = requests.get(path.join('https://geo.nyu.edu',i[1:]), data=payload, headers=headers) #cargar la pagina de cada elemento
                 dwnld = BeautifulSoup(r2.text, 'lxml') 
                 shps.append(dwnld.findAll('a', {'class': 'btn btn-primary btn-block download download-original'})) #seleccionar los links de descarga de cada pagina
-                name.append(dwnld.findAll('span', {'itemprop': 'name'})) #seleccionar los nombres de cada elemento
+                names.append(dwnld.findAll('span', {'itemprop': 'name'})) #seleccionar los nombres de cada elemento
                 desc.append(dwnld.findAll('div', {'class': 'truncate-abstract'}))
             shps_links = Extract_href(shps) #sacar los links solos
             for i in range(len(shps_links)): #iterar sobre los links de descarga
@@ -56,7 +56,7 @@ def scrapper(action,page):
                 if action:
                     #with open('shapefiles/'+str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip', 'w+b') as f: #descargar el archivo
                     url = str(shps_links[i][:-len('>Original')])
-                    name = str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip'
+                    name = str(names[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip'
                     name = name.translate({ord(c): None for c in string.whitespace})
                     urllib.request.urlretrieve(url,'shapefiles/'+name)
                 else:
@@ -70,7 +70,7 @@ def scrapper(action,page):
             page = path.join('https://geo.nyu.edu',nextp[0][1:]) #cambiar a la pagina siguiente
     except:
         pass
-
+    
 
 from colorama import Fore
 
