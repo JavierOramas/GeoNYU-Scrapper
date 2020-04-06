@@ -62,6 +62,7 @@ def convert_to_kml(directory:str):
 def convert_to_json(directory:str, mode:bool, maxnum:int = 1000):
     import shapefile
     os.makedirs('geojsons', exist_ok=True) #crear carpeta destino de los json
+    os.makedirs('upload', exist_ok=True) #crear carpeta destino de los json
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
