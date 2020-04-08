@@ -4,10 +4,10 @@ from bs4 import BeautifulSoup
 from extras import Extract_href
 from extras import Extract_description
 from extras import Remove_extra
-from extras import convert_to_kml
+# from extras import convert_to_kml
 from extras import convert_to_json
-from extras import convert_to_geojson
-from extras import count_deep
+# from extras import convert_to_geojson
+# from extras import count_deep
 import os.path as path
 import os
 import json
