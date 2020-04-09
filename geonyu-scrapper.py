@@ -107,10 +107,10 @@ def convert_polygons(maxnum:int = 1000):
     convert_to_json('shapefiles/',True,maxnum)
     print(Fore.GREEN+"Done!")
     
-@app.command(name='count' ,help='Counts points on every polygon')
-def count():
-    count_deep('shapefiles/')
-    print(Fore.GREEN+"Done!")
+# @app.command(name='count' ,help='Counts points on every polygon')
+# def count():
+#     count_deep('shapefiles/')
+#     print(Fore.GREEN+"Done!")
 
 if __name__ == "__main__":
     app()
