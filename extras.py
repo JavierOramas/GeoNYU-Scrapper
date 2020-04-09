@@ -2,9 +2,7 @@ import zipfile
 import os
 from os import path
 import json
-import pygeoj
-import unicodedata
-      
+
 def Extract_href(elements):
     new_list = []
     for item in elements:
