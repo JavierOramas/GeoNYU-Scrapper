@@ -66,7 +66,7 @@ def convert_to_json(directory:str, mode:bool, maxnum:int = 1000):
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-            # try:
+            try:
                 if f.endswith('.zip'):
                     zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
                     os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
@@ -81,4 +81,7 @@ def convert_to_json(directory:str, mode:bool, maxnum:int = 1000):
                     inputf = path.join('decompress',filename)
                     
                     os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf)
+                    os.rmdir('decompress')
+            except:
+                pass
                    
