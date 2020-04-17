@@ -65,7 +65,7 @@ def scrapper(action,page):
             return
         
         page = path.join('https://geo.nyu.edu',nextp[0][1:]) #cambiar a la pagina siguiente
-        if len(page) == 1:
+        if len(nextp[0][1:]) == 1:
             break
 
 
