@@ -48,7 +48,7 @@ def scrapper(action,page):
             desc.append(dwnld.findAll('div', {'class': 'truncate-abstract'}))
         shps_links = Extract_href(shps) #sacar los links solos
         for i in range(len(shps_links)): #iterar sobre los links de descarga
-            sleep(100)
+            sleep(2)
             os.makedirs('shapefiles',exist_ok=True) #crear el directorio donde van a guardarse los archivos
             if action:
                 #with open('shapefiles/'+str(name[i])[len('<span itemprop="name"> '):-len(' </span>')]+'.zip', 'w+b') as f: #descargar el archivo
