@@ -64,22 +64,22 @@ def convert_to_json(directory:str, mode:bool, maxnum:int = 1000):
     
     for cp,dir,files in os.walk(directory): #recorrer todo el directorio de los shapefiles
        for f in files:                      #recorrer todos los .zip 
-            try:
-                if f.endswith('.zip'):
-                    zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
-                    os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
-                               
-                    for i in zf.namelist():                        #recorrer todo el .zip
-                        zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
-                        if i.endswith('.shp'):                          #si el archivo es el .shp
-                            filename = i                             #guardar el nombre
+            # try:
+            if f.endswith('.zip'):
+                zf = zipfile.ZipFile(path.join(directory,str(f)),'r') #cargar los .zip
+                os.makedirs('decompress', exist_ok=True)         #crear la carpeta de trabajo
+                           
+                for i in zf.namelist():                        #recorrer todo el .zip
+                    zf.extract(i, path='decompress', pwd=None)   #extraer los archivos en la carpeta de trabajo
+                    if i.endswith('.shp'):                          #si el archivo es el .shp
+                        filename = i                             #guardar el nombre
+                
+                outputfi = f[:-4]+'.json'                          #fichero .geojson de salida
+                outputfo = path.join('upload',outputfi)      #direccion del fichero de salida
+                inputf = path.join('decompress',filename)
+                
+                os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf)
+                os.rmdir('decompress')
+            # except:
+            #     pass
                     
-                    outputfi = f[:-4]+'.json'                          #fichero .geojson de salida
-                    outputfo = path.join('upload',outputfi)      #direccion del fichero de salida
-                    inputf = path.join('decompress',filename)
-                    
-                    os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf)
-                    os.rmdir('decompress')
-            except:
-                pass
-                   
