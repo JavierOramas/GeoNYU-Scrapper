@@ -79,7 +79,7 @@ def convert_to_json(directory:str, mode:bool, maxnum:int = 1000):
                 inputf = path.join('decompress',filename)
                 
                 os.system('ogr2ogr -f "GeoJSON" '+outputfo+' '+inputf)
-                os.rmdir('decompress')
+                os.system('rm -rf decompress')
             # except:
             #     pass
                     
