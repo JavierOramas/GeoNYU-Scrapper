@@ -65,7 +65,8 @@ def scrapper(action,page):
             return
         
         page = path.join('https://geo.nyu.edu',nextp[0][1:]) #cambiar a la pagina siguiente
-        if len(nextp[0][1:]) == 1:
+        print(nextp[0][:])
+        if len(nextp[0][1:]) <= 1:
             break
 
 
@@ -85,7 +86,8 @@ def get_custom(country:str):
 @app.command(name='get-polygons' ,help='Download all the polygons from geo.nyu.edu and splits all polygons in 100 points polygons\
     \n Args: maxnum = maximum number of points per polygon (default 100)')
 def get_polygons(maxnum:int = 1000):
-    page ='https://geo.nyu.edu/?per_page=10&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
+    page ='https://geo.nyu.edu/?per_page=100&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
+    # page ='https://geo.nyu.edu/?page=73&per_page=10&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
     scrapper(True,page)
     os.makedirs('upload', exist_ok=True)
     convert_to_json('shapefiles/',True,maxnum)
@@ -94,7 +96,7 @@ def get_polygons(maxnum:int = 1000):
     
 @app.command(name='get-description' ,help='Download the description of all polygons from geo.nyu.edu')
 def get_description():
-    page ='https://geo.nyu.edu/?per_page=10&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
+    page ='https://geo.nyu.edu/?per_page=100&q=%22-level+administrative+division%22+%22polygon%22+%22public%22+%22stanford%22' #pagina inicial
     scrapper(False)
     print(Fore.GREEN+"Done!")
     
