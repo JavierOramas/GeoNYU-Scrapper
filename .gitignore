@@ -8,3 +8,4 @@ decompress/*
 __pycache__/extras.cpython-37.pyc
 upload/.fuse_hidden00000e0f00000181
 __pycache__/extras.cpython-37.pyc
+*.txt

@@ -53,7 +53,7 @@ def convert_to_kml(directory:str):
 
                     os.system('ogr2ogr -f KML '+outputfo+' '+inputf) #convertir con ogr2ogr de shp a kml
                     os.system('cp '+outputfo+' KML/'+outputfi)       #copiarlo a la carpeta KML
-                    os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo
+                    #os.system('rm -rf decompress')                   #eliminar la carpeta de trabajo
         #    except:
         #       pass
     
