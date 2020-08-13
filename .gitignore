@@ -5,7 +5,8 @@ shapefiles/*
 *.shp
 KML/*
 decompress/*
-__pycache__/extras.cpython-37.pyc
 upload/.fuse_hidden00000e0f00000181
-__pycache__/extras.cpython-37.pyc
 *.txt
+__pycache__/*
+.vscode/settings.json
+__pycache__/dinamyc.cpython-37.pyc
