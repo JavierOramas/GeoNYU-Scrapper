@@ -1,3 +1,4 @@
+[![HitCount](http://hits.dwyl.com/JavierOramas/GeoNYU-Scrapper.svg)](http://hits.dwyl.com/JavierOramas/GeoNYU-Scrapper)
 GeoNYU-Scrapper
 ===============
 
